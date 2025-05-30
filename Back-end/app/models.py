@@ -29,11 +29,15 @@ class Sensor(models.Model):
         return self.sensor
     
 class Ambient(models.Model):
-    sig = models.IntegerField()
-    descricao = models.TextField(blank=True, null=True)
+    validator_sig = RegexValidator(
+        regex=r'^[0-9]{8}$',
+        message='O SIG deve conter exatamente 8 números.'
+    )
+    sig = models.IntegerField(validators=[validator_sig], unique=True)
+    descricao = models.CharField(max_length=20, blank=True, null=True)
     validator_ni = RegexValidator (
-        regex=r'^\d{5}/\d{2}$', 
-        message='O número de identificação deve seguir o formato 12345/67'
+        regex=r'^(SN\d{7}|\d{7})$',
+        message= 'O NI deve ser no formato SN seguido de 7 dígitos ou apenas 7 dígitos.'
     )
     ni = models.CharField(max_length=8, blank=True, null=True, unique=True, validators=[validator_ni])
     responsavel = models.CharField(max_length=100, blank=True, null=True)
@@ -43,7 +47,7 @@ class Ambient(models.Model):
 
 class Historic(models.Model):
     valor = models.FloatField()
-    timestamp = models.IntegerField()
+    timestamp = models.DateTimeField(blank=True, null=True)
     sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, related_name='historics')
     ambient = models.ForeignKey(Ambient, on_delete=models.CASCADE, related_name='historics')
 
