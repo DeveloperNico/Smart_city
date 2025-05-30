@@ -29,3 +29,12 @@ class HistoricSerializer(serializers.ModelSerializer):
     class Meta:
         model = Historic
         fields = '__all__'
+
+class LoginSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data['user'] = {
+            'username': self.user.username,
+            'cargo': self.user.cargo
+        }
+        return data
