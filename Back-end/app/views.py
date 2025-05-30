@@ -1,7 +1,7 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import UserSerializer, SensorsSerializer, AmbientsSerializer, HistoricSerializer, LoginSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from .models import User, Sensors, Ambients, Historic
+from .models import User, Sensor, Ambient, Historic
 from .permissions import IsAdmin
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
@@ -23,23 +23,23 @@ class UserRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'pk'
 
 class SensorsListCreateView(ListCreateAPIView):
-    queryset = Sensors.objects.all()
+    queryset = Sensor.objects.all()
     serializer_class = SensorsSerializer
     permission_classes = [IsAuthenticated]
 
 class SensorsRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = Sensors.objects.all()
+    queryset = Sensor.objects.all()
     serializer_class = SensorsSerializer
     permission_classes = [IsAuthenticated]
     lookup_field = 'pk'
 
 class AmbientsListCreateView(ListCreateAPIView):
-    queryset = Ambients.objects.all()
+    queryset = Ambient.objects.all()
     serializer_class = AmbientsSerializer
     permission_classes = [IsAuthenticated]
 
 class AmbientsRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = Ambients.objects.all()
+    queryset = Ambient.objects.all()
     serializer_class = AmbientsSerializer
     permission_classes = [IsAuthenticated]
     lookup_field = 'pk'

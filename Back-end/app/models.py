@@ -13,7 +13,7 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
     
-class Sensors(models.Model):
+class Sensor(models.Model):
     sensor = models.CharField(max_length=100, unique=True)
     validator_mac_address = RegexValidator(
         regex=r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',
@@ -28,7 +28,7 @@ class Sensors(models.Model):
     def __str__(self):
         return self.sensor
     
-class Ambients(models.Model):
+class Ambient(models.Model):
     sig = models.IntegerField()
     descricao = models.TextField(blank=True, null=True)
     validator_ni = RegexValidator (
@@ -44,8 +44,8 @@ class Ambients(models.Model):
 class Historic(models.Model):
     valor = models.FloatField()
     timestamp = models.IntegerField()
-    sensor = models.ForeignKey(Sensors, on_delete=models.CASCADE, related_name='historics')
-    ambient = models.ForeignKey(Ambients, on_delete=models.CASCADE, related_name='historics')
+    sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, related_name='historics')
+    ambient = models.ForeignKey(Ambient, on_delete=models.CASCADE, related_name='historics')
 
     class Meta:
         verbose_name_plural = 'Historics'

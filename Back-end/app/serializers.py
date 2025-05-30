@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Sensors, Ambients, Historic
+from .models import User, Sensor, Ambient, Historic
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
@@ -17,12 +17,12 @@ class UserSerializer(serializers.ModelSerializer):
     
 class SensorsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Sensors
+        model = Sensor
         fields = '__all__'
 
 class AmbientsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Ambients
+        model = Ambient
         fields = '__all__'
 
 class HistoricSerializer(serializers.ModelSerializer):
