@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class User(AbstractUser):
     CARGOS = [
-        ('A' 'Administrador'),
+        ('A', 'Administrador'),
         ('C', 'Comum')
     ]
     cargo = models.CharField(max_length=1, choices=CARGOS, default='A')
@@ -20,7 +20,7 @@ class Sensors(models.Model):
         message='Formato de endereço MAC inválido. Exemplo: 00:1A:2B:3C:4D:5E'
     )
     mac_address = models.CharField(max_length=17, unique=True, validators=[validator_mac_address])
-    unidade_medida = models.CharFiled(max_length=10)
+    unidade_medida = models.CharField(max_length=10)
     latitude = models.FloatField()
     longitude = models.FloatField()
     status = models.BooleanField(default=True)
