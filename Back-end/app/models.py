@@ -19,7 +19,7 @@ class Sensor(models.Model):
         regex=r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',
         message='Formato de endereço MAC inválido. Exemplo: 00:1A:2B:3C:4D:5E'
     )
-    mac_address = models.CharField(max_length=17, unique=True, validators=[validator_mac_address])
+    mac_address = models.CharField(max_length=17, validators=[validator_mac_address])
     unidade_medida = models.CharField(max_length=10)
     latitude = models.FloatField()
     longitude = models.FloatField()
@@ -36,8 +36,8 @@ class Ambient(models.Model):
     sig = models.IntegerField(validators=[validator_sig], unique=True)
     descricao = models.CharField(max_length=20, blank=True, null=True)
     validator_ni = RegexValidator (
-        regex=r'^(SN\d{7}|\d{7})$',
-        message= 'O NI deve ser no formato SN seguido de 7 dígitos ou apenas 7 dígitos.'
+        regex=r'^(SN\d{5}|\d{7})$',
+        message='O NI deve ser no formato SNXXXXX ou XXXXXXX (onde X é um dígito).'
     )
     ni = models.CharField(max_length=8, blank=True, null=True, unique=True, validators=[validator_ni])
     responsavel = models.CharField(max_length=100, blank=True, null=True)
