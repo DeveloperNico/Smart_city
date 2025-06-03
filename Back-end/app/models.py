@@ -80,13 +80,13 @@ class Ambient(models.Model):
         regex=r'^[0-9]{8}$',
         message='O SIG deve conter exatamente 8 números.'
     )
-    sig = models.IntegerField(validators=[validator_sig], unique=True)
+    sig = models.IntegerField(validators=[validator_sig])
     descricao = models.CharField(max_length=20, blank=True, null=True)
     validator_ni = RegexValidator (
         regex=r'^(SN\d{5}|\d{7})$',
         message='O NI deve ser no formato SNXXXXX ou XXXXXXX (onde X é um dígito).'
     )
-    ni = models.CharField(max_length=8, blank=True, null=True, unique=True, validators=[validator_ni])
+    ni = models.CharField(max_length=8, blank=True, null=True, validators=[validator_ni])
     responsavel = models.CharField(max_length=100, blank=True, null=True)
     
     def __str__(self):
@@ -96,11 +96,13 @@ class Historic(models.Model):
     valor = models.FloatField()
     timestamp = models.DateTimeField(blank=True, null=True)
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, blank=True, null=True)
-    object_id = models.PositiveIntegerField(blank=True, null=True)
-    sensor = GenericForeignKey('content_type', 'object_id')
+    sensor_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name='ambient_historic')
+    sensor_object_id = models.PositiveIntegerField(blank=True, null=True)
+    sensor = GenericForeignKey('content_type', 'sensor_object_id')
 
-    ambient = models.ForeignKey(Ambient, on_delete=models.CASCADE, related_name='historics')
+    ambient_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name='ambient_historic')
+    ambient_object_id = models.PositiveIntegerField(blank=True, null=True)
+    ambient = GenericForeignKey('content_type', 'ambient_object_id')
 
     class Meta:
         verbose_name_plural = 'Historics'

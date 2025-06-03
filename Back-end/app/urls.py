@@ -11,6 +11,8 @@ urlpatterns = [
     path('sensors/temperature/import/', importSensorsTemperatureExcelView.as_view(), name='import-sensors-temperature-excel'),
     path('sensors/humidity/import/', importSensorsHumidityExcelView.as_view(), name='import-sensors-humidity-excel'),
     path('sensors/luminosity/import/', importSensorsLuminosityExcelView.as_view(), name='import-sensors-luminosity-excel'),
+    path('ambients/import/', importAmbientsExcelView.as_view(), name='import-ambients-excel'),
+    path('historic/import/', importHistoricExcelView.as_view(), name='import-historic-excel'),
     # -------------------------------------------------------------------------------------------------------------------------------
     
     # Importação de sensores de luminosidade, temperatura, umidade e contadores GET, POST, PUT, DELETE ------------------------------------------------
@@ -24,8 +26,10 @@ urlpatterns = [
     path('sensors/luminosity/<int:pk>/', SensorLuminosityRetriveUpdateDestroyView.as_view(), name='sensor-luminosity-retrieve-update-destroy'),
     # --------------------------------------------------------------------------------------------------------------------------------------------------
 
+    # Importação de ambientes e histórico GET, POST, PUT, DELETE ---------------------------------------------------------
     path('ambients/', AmbientsListCreateView.as_view(), name='ambients-list-create'),
     path('ambients/<int:pk>/', AmbientsRetriveUpdateDestroyView.as_view(), name='ambients-retrieve-update-destroy'),
     path('historic/', HistoricListCreateView.as_view(), name='historic-list-create'),
     path('historic/<int:pk>/', HistoricRetriveUpdateDestroyView.as_view(), name='historic-retrieve-update-destroy'),
+    # ---------------------------------------------------------------------------------------------------------------------
 ]

@@ -137,6 +137,58 @@ class importSensorsLuminosityExcelView(APIView):
         
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+# Classe para importar ambientes via Excel
+class importAmbientsExcelView(APIView):
+    perser_classes = [MultiPartParser]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        excel_file = request.FILES.get('file')
+        if not excel_file:
+            return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            df = pd.read_excel(excel_file)
+
+            for _, row in df.iterrows():
+                Ambient.objects.create(
+                    sig=row['sig'],
+                    descricao=row['descricao'],
+                    ni= row['ni'],
+                    responsavel=row['responsavel'],
+                )
+
+            return Response({"message": "Ambients imported successfully"}, status=status.HTTP_201_CREATED)
+        
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+# Classe para importar histórico via Excel
+class importHistoricExcelView(APIView):
+    perser_classes = [MultiPartParser]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        excel_file = request.FILES.get('file')
+        if not excel_file:
+            return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            df = pd.read_excel(excel_file)
+
+            for _, row in df.iterrows():
+                Historic.objects.create(
+                    sensor= row['sensor'],
+                    ambient= row['ambient'],
+                    valor=row['valor'],
+                    timestamp=row['timestamp']
+                )
+
+            return Response({"message": "Historic imported successfully"}, status=status.HTTP_201_CREATED)
+        
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 # Classes para fazer o GET, POST, UPDATE e DELETE do sensor de contador        
 class SensorCounterListCreateView(ListCreateAPIView):
