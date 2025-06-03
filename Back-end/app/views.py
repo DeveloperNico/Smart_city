@@ -1,6 +1,6 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.views import APIView
-from .serializers import UserSerializer, AmbientsSerializer, HistoricSerializer, LoginSerializer, SensorCounterSerializer, SensorHumiditySerializer, SensorLuminositySerializer, SensorTemperatureSerializer, SensorsSerializer
+from .serializers import UserSerializer, AmbientsSerializer, HistoricSerializer, LoginSerializer, SensorCounterSerializer, SensorHumiditySerializer, SensorLuminositySerializer, SensorTemperatureSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .models import User, Ambient, Historic, SensorCounter, SensorLuminosity, SensorTemperature, SensorHumidity
 from .permissions import IsAdmin
@@ -32,7 +32,7 @@ class importSensorsCounterExcelView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
-        excel_file = request.FILES.get('files')
+        excel_file = request.FILES.get('file')
         if not excel_file:
             return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -60,7 +60,7 @@ class importSensorsTemperatureExcelView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
-        excel_file = request.FILES.get('files')
+        excel_file = request.FILES.get('file')
         if not excel_file:
             return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -88,7 +88,7 @@ class importSensorsHumidityExcelView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
-        excel_file = request.FILES.get('files')
+        excel_file = request.FILES.get('file')
         if not excel_file:
             return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -116,7 +116,7 @@ class importSensorsLuminosityExcelView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
-        excel_file = request.FILES.get('files')
+        excel_file = request.FILES.get('file')
         if not excel_file:
             return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
         
