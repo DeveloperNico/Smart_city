@@ -14,7 +14,7 @@ class User(AbstractUser):
         return self.username
     
 class Sensor(models.Model):
-    sensor = models.CharField(max_length=100, unique=True)
+    sensor = models.CharField(max_length=100)
     validator_mac_address = RegexValidator(
         regex=r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',
         message='Formato de endereço MAC inválido. Exemplo: 00:1A:2B:3C:4D:5E'
