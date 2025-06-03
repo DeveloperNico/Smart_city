@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.utils import timezone
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 class User(AbstractUser):
     CARGOS = [
@@ -13,7 +15,22 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
     
-class Sensor(models.Model):
+class SensorCounter(models.Model):
+    sensor = models.CharField(max_length=100)
+    validator_mac_address = RegexValidator(
+        regex=r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',
+        message='Formato de endereço MAC inválido. Exemplo: 00:1A:2B:3C:4D:5E'
+    )
+    mac_address = models.CharField(max_length=17, validators=[validator_mac_address])
+    unidade_medida = models.CharField(max_length=10)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    status = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.sensor
+
+class SensorLuminosity(models.Model):
     sensor = models.CharField(max_length=100)
     validator_mac_address = RegexValidator(
         regex=r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',
@@ -28,6 +45,36 @@ class Sensor(models.Model):
     def __str__(self):
         return self.sensor
     
+class SensorTemperature(models.Model):
+    sensor = models.CharField(max_length=100)
+    validator_mac_address = RegexValidator(
+        regex=r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',
+        message='Formato de endereço MAC inválido. Exemplo: 00:1A:2B:3C:4D:5E'
+    )
+    mac_address = models.CharField(max_length=17, validators=[validator_mac_address])
+    unidade_medida = models.CharField(max_length=10)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    status = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.sensor
+    
+class SensorHumidity(models.Model):
+    sensor = models.CharField(max_length=100)
+    validator_mac_address = RegexValidator(
+        regex=r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',
+        message='Formato de endereço MAC inválido. Exemplo: 00:1A:2B:3C:4D:5E'
+    )
+    mac_address = models.CharField(max_length=17, validators=[validator_mac_address])
+    unidade_medida = models.CharField(max_length=10)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    status = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.sensor
+
 class Ambient(models.Model):
     validator_sig = RegexValidator(
         regex=r'^[0-9]{8}$',
@@ -48,7 +95,11 @@ class Ambient(models.Model):
 class Historic(models.Model):
     valor = models.FloatField()
     timestamp = models.DateTimeField(blank=True, null=True)
-    sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, related_name='historics')
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, blank=True, null=True)
+    object_id = models.PositiveIntegerField(blank=True, null=True)
+    sensor = GenericForeignKey('content_type', 'object_id')
+
     ambient = models.ForeignKey(Ambient, on_delete=models.CASCADE, related_name='historics')
 
     class Meta:

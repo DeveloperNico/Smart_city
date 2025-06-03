@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Sensor, Ambient, Historic
+from .models import User, Ambient, Historic
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
@@ -14,11 +14,6 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
-    
-class SensorsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Sensor
-        fields = '__all__'
 
 class AmbientsSerializer(serializers.ModelSerializer):
     class Meta:

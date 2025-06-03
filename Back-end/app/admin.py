@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Sensor, Ambient, Historic
+from .models import User, Ambient, Historic
 from django.contrib.auth.admin import UserAdmin
 
 class UsuarioAdmin(UserAdmin):
@@ -11,6 +11,5 @@ class UsuarioAdmin(UserAdmin):
     )
 
 admin.site.register(User, UsuarioAdmin)
-admin.site.register(Sensor)
 admin.site.register(Ambient)
 admin.site.register(Historic)

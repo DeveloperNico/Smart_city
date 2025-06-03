@@ -1,8 +1,8 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.views import APIView
-from .serializers import UserSerializer, SensorsSerializer, AmbientsSerializer, HistoricSerializer, LoginSerializer
+from .serializers import UserSerializer, AmbientsSerializer, HistoricSerializer, LoginSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from .models import User, Sensor, Ambient, Historic
+from .models import User, Ambient, Historic
 from .permissions import IsAdmin
 from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes
@@ -26,43 +26,43 @@ class UserRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdmin]
     lookup_field = 'pk'
 
-class importSensorsExcelView(APIView):
-    perser_classes = [MultiPartParser]
-    permission_classes = [IsAuthenticated]
+# class importSensorsExcelView(APIView):
+#     perser_classes = [MultiPartParser]
+#     permission_classes = [IsAuthenticated]
 
-    def post(self, request, format=None):
-        excel_file = request.FILES.get('files')
-        if not excel_file:
-            return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
+#     def post(self, request, format=None):
+#         excel_file = request.FILES.get('files')
+#         if not excel_file:
+#             return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
         
-        try:
-            df = pd.read_excel(excel_file)
+#         try:
+#             df = pd.read_excel(excel_file)
 
-            for _, row in df.iterrows():
-                Sensor.objects.create(
-                    sensor=row['sensor'],
-                    mac_address=row['mac_address'],
-                    unidade_medida=row['unidade_medida'],
-                    latitude=row['latitude'],
-                    longitude=row['longitude'],
-                    status=row['status'] in [True, 'True', 'true', 1],
-                )
+#             for _, row in df.iterrows():
+#                 Sensor.objects.create(
+#                     sensor=row['sensor'],
+#                     mac_address=row['mac_address'],
+#                     unidade_medida=row['unidade_medida'],
+#                     latitude=row['latitude'],
+#                     longitude=row['longitude'],
+#                     status=row['status'] in [True, 'True', 'true', 1],
+#                 )
 
-            return Response({"message": "Sensors imported successfully"}, status=status.HTTP_201_CREATED)
+#             return Response({"message": "Sensors imported successfully"}, status=status.HTTP_201_CREATED)
         
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+#         except Exception as e:
+#             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-class SensorsListCreateView(ListCreateAPIView):
-    queryset = Sensor.objects.all()
-    serializer_class = SensorsSerializer
-    permission_classes = [IsAuthenticated]
+# class SensorsListCreateView(ListCreateAPIView):
+#     queryset = Sensor.objects.all()
+#     serializer_class = SensorsSerializer
+#     permission_classes = [IsAuthenticated]
 
-class SensorsRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = Sensor.objects.all()
-    serializer_class = SensorsSerializer
-    permission_classes = [IsAuthenticated]
-    lookup_field = 'pk'
+# class SensorsRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+#     queryset = Sensor.objects.all()
+#     serializer_class = SensorsSerializer
+#     permission_classes = [IsAuthenticated]
+#     lookup_field = 'pk'
 
 class AmbientsListCreateView(ListCreateAPIView):
     queryset = Ambient.objects.all()
