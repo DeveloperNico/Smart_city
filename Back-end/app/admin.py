@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Ambient, Historic, SensorTemperature, SensorHumidity, SensorLuminosity, SensorCounter
+from .models import User, Ambient, Historic, Sensor
 from django.contrib.auth.admin import UserAdmin
 
 class UsuarioAdmin(UserAdmin):
@@ -11,9 +11,6 @@ class UsuarioAdmin(UserAdmin):
     )
 
 admin.site.register(User, UsuarioAdmin)
-admin.site.register(SensorTemperature)
-admin.site.register(SensorHumidity)
-admin.site.register(SensorLuminosity)
-admin.site.register(SensorCounter)
+admin.site.register(Sensor)
 admin.site.register(Ambient)
 admin.site.register(Historic)

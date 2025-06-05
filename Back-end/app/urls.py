@@ -7,23 +7,14 @@ urlpatterns = [
     path('users/<int:pk>/', UserRetriveUpdateDestroyView.as_view(), name='user-retrieve-update-destroy'),
 
     # Endpoints para importação de sensores via Excel -------------------------------------------------------------------------------
-    path('sensors/counter/import/', importSensorsCounterExcelView.as_view(), name='import-sensors-counter-excel'),
-    path('sensors/temperature/import/', importSensorsTemperatureExcelView.as_view(), name='import-sensors-temperature-excel'),
-    path('sensors/humidity/import/', importSensorsHumidityExcelView.as_view(), name='import-sensors-humidity-excel'),
-    path('sensors/luminosity/import/', importSensorsLuminosityExcelView.as_view(), name='import-sensors-luminosity-excel'),
     path('ambients/import/', importAmbientsExcelView.as_view(), name='import-ambients-excel'),
     path('historic/import/', importHistoricExcelView.as_view(), name='import-historic-excel'),
+    path('sensors/import/', importSensorsExcelView.as_view(), name='import-sensors-excel'),
     # -------------------------------------------------------------------------------------------------------------------------------
     
     # Importação de sensores de luminosidade, temperatura, umidade e contadores GET, POST, PUT, DELETE ------------------------------------------------
-    path('sensors/counter/', SensorCounterListCreateView.as_view(), name='sensor-counter-list-create'),
-    path('sensors/counter/<int:pk>/', SensorCounterRetriveUpdateDestroyView.as_view(), name='sensor-counter-retrieve-update-destroy'),
-    path('sensors/temperature/', SensorTemperatureListCreateView.as_view(), name='sensor-temperature-list-create'),
-    path('sensors/temperature/<int:pk>/', SensorTemperatureRetriveUpdateDestroyView.as_view(), name='sensor-temperature-retrieve-update-destroy'),
-    path('sensors/humidity/', SensorHumidityListCreateView.as_view(), name='sensor-humidity-list-create'),
-    path('sensors/humidity/<int:pk>/', SensorHumidityRetriveUpdateDestroyView.as_view(), name='sensor-humidity-retrieve-update-destroy'),
-    path('sensors/luminosity/', SensorLuminosityListCreateView.as_view(), name='sensor-luminosity-list-create'),
-    path('sensors/luminosity/<int:pk>/', SensorLuminosityRetriveUpdateDestroyView.as_view(), name='sensor-luminosity-retrieve-update-destroy'),
+    path('sensors/', SensorsListCreateView.as_view(), name='sensors-list-create'),
+    path('sensors/<int:pk>/', SensorsRetriveUpdateDestroyView.as_view(), name='sensors-retrieve-update-destroy'),
     # --------------------------------------------------------------------------------------------------------------------------------------------------
 
     # Importação de ambientes e histórico GET, POST, PUT, DELETE ---------------------------------------------------------

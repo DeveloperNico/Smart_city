@@ -15,52 +15,7 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
     
-class SensorCounter(models.Model):
-    sensor = models.CharField(max_length=100)
-    validator_mac_address = RegexValidator(
-        regex=r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',
-        message='Formato de endereço MAC inválido. Exemplo: 00:1A:2B:3C:4D:5E'
-    )
-    mac_address = models.CharField(max_length=17, validators=[validator_mac_address])
-    unidade_medida = models.CharField(max_length=10)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
-    status = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.sensor
-
-class SensorLuminosity(models.Model):
-    sensor = models.CharField(max_length=100)
-    validator_mac_address = RegexValidator(
-        regex=r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',
-        message='Formato de endereço MAC inválido. Exemplo: 00:1A:2B:3C:4D:5E'
-    )
-    mac_address = models.CharField(max_length=17, validators=[validator_mac_address])
-    unidade_medida = models.CharField(max_length=10)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
-    status = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.sensor
-    
-class SensorTemperature(models.Model):
-    sensor = models.CharField(max_length=100)
-    validator_mac_address = RegexValidator(
-        regex=r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',
-        message='Formato de endereço MAC inválido. Exemplo: 00:1A:2B:3C:4D:5E'
-    )
-    mac_address = models.CharField(max_length=17, validators=[validator_mac_address])
-    unidade_medida = models.CharField(max_length=10)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
-    status = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.sensor
-    
-class SensorHumidity(models.Model):
+class Sensor(models.Model):
     sensor = models.CharField(max_length=100)
     validator_mac_address = RegexValidator(
         regex=r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',
@@ -96,13 +51,13 @@ class Historic(models.Model):
     valor = models.FloatField()
     timestamp = models.DateTimeField(blank=True, null=True)
 
-    sensor_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name='ambient_historic')
+    sensor_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name='sensor_historic', blank=True, null=True)
     sensor_object_id = models.PositiveIntegerField(blank=True, null=True)
-    sensor = GenericForeignKey('content_type', 'sensor_object_id')
+    sensor = GenericForeignKey('sensor_content_type', 'sensor_object_id')
 
-    ambient_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name='ambient_historic')
+    ambient_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, related_name='ambient_historic', blank=True, null=True)
     ambient_object_id = models.PositiveIntegerField(blank=True, null=True)
-    ambient = GenericForeignKey('content_type', 'ambient_object_id')
+    ambient = GenericForeignKey('ambient_content_type', 'ambient_object_id')
 
     class Meta:
         verbose_name_plural = 'Historics'

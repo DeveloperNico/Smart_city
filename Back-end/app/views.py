@@ -1,8 +1,8 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.views import APIView
-from .serializers import UserSerializer, AmbientsSerializer, HistoricSerializer, LoginSerializer, SensorCounterSerializer, SensorHumiditySerializer, SensorLuminositySerializer, SensorTemperatureSerializer
+from .serializers import UserSerializer, AmbientsSerializer, HistoricSerializer, LoginSerializer, SensorSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from .models import User, Ambient, Historic, SensorCounter, SensorLuminosity, SensorTemperature, SensorHumidity
+from .models import User, Ambient, Historic, Sensor
 from .permissions import IsAdmin
 from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes
@@ -26,114 +26,34 @@ class UserRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdmin]
     lookup_field = 'pk'
 
-# Classe para importar sensores de luminosidade via Excel
-class importSensorsCounterExcelView(APIView):
+# Classe para importar todos sensores via Excel
+class importSensorsExcelView(APIView):
     perser_classes = [MultiPartParser]
     permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
-        excel_file = request.FILES.get('file')
-        if not excel_file:
+        excel_files = request.FILES.getlist('files')
+        if not excel_files:
             return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
         
         try:
-            df = pd.read_excel(excel_file)
+            total_imported = 0
 
-            for _, row in df.iterrows():
-                SensorCounter.objects.create(
-                    sensor=row['sensor'],
-                    mac_address=row['mac_address'],
-                    unidade_medida=row['unidade_medida'],
-                    latitude=row['latitude'],
-                    longitude=row['longitude'],
-                    status=row['status'] in [True, 'True', 'true', 1],
-                )
+            for excel_file in excel_files:
+                df = pd.read_excel(excel_file)
 
-            return Response({"message": "Sensors imported successfully"}, status=status.HTTP_201_CREATED)
-        
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+                for _, row in df.iterrows():
+                    Sensor.objects.create(
+                        sensor=row['sensor'],
+                        mac_address=row['mac_address'],
+                        unidade_medida=row['unidade_medida'],
+                        latitude=row['latitude'],
+                        longitude=row['longitude'],
+                        status=row['status'] in [True, 'True', 'true', 1],
+                    )
+                    total_imported += 1
 
-# Classe para importar sensores de temperatura via Excel
-class importSensorsTemperatureExcelView(APIView):
-    perser_classes = [MultiPartParser]
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, format=None):
-        excel_file = request.FILES.get('file')
-        if not excel_file:
-            return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        try:
-            df = pd.read_excel(excel_file)
-
-            for _, row in df.iterrows():
-                SensorTemperature.objects.create(
-                    sensor=row['sensor'],
-                    mac_address=row['mac_address'],
-                    unidade_medida=row['unidade_medida'],
-                    latitude=row['latitude'],
-                    longitude=row['longitude'],
-                    status=row['status'] in [True, 'True', 'true', 1],
-                )
-
-            return Response({"message": "Sensors imported successfully"}, status=status.HTTP_201_CREATED)
-        
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-# Classe para importar sensores de umidade via Excel
-class importSensorsHumidityExcelView(APIView):
-    perser_classes = [MultiPartParser]
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, format=None):
-        excel_file = request.FILES.get('file')
-        if not excel_file:
-            return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        try:
-            df = pd.read_excel(excel_file)
-
-            for _, row in df.iterrows():
-                SensorHumidity.objects.create(
-                    sensor=row['sensor'],
-                    mac_address=row['mac_address'],
-                    unidade_medida=row['unidade_medida'],
-                    latitude=row['latitude'],
-                    longitude=row['longitude'],
-                    status=row['status'] in [True, 'True', 'true', 1],
-                )
-
-            return Response({"message": "Sensors imported successfully"}, status=status.HTTP_201_CREATED)
-        
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        
-# Classe para importar sensores de luminosidade via Excel
-class importSensorsLuminosityExcelView(APIView):
-    perser_classes = [MultiPartParser]
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, format=None):
-        excel_file = request.FILES.get('file')
-        if not excel_file:
-            return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        try:
-            df = pd.read_excel(excel_file)
-
-            for _, row in df.iterrows():
-                SensorLuminosity.objects.create(
-                    sensor=row['sensor'],
-                    mac_address=row['mac_address'],
-                    unidade_medida=row['unidade_medida'],
-                    latitude=row['latitude'],
-                    longitude=row['longitude'],
-                    status=row['status'] in [True, 'True', 'true', 1],
-                )
-
-            return Response({"message": "Sensors imported successfully"}, status=status.HTTP_201_CREATED)
+            return Response({"message": f"{total_imported} sensors successfully imported from  {len(excel_files)} files(s)."}, status=status.HTTP_201_CREATED)
         
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -189,52 +109,16 @@ class importHistoricExcelView(APIView):
         
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-# Classes para fazer o GET, POST, UPDATE e DELETE do sensor de contador        
-class SensorCounterListCreateView(ListCreateAPIView):
-    queryset = SensorCounter.objects.all()
-    serializer_class = SensorCounterSerializer
+        
+# Classe para fazer o GET, POST, UPDATE e DELETE dos sensores
+class SensorsListCreateView(ListCreateAPIView):
+    queryset = Sensor.objects.all()
+    serializer_class = SensorSerializer
     permission_classes = [IsAuthenticated]
 
-class SensorCounterRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = SensorCounter.objects.all()
-    serializer_class = SensorCounterSerializer
-    permission_classes = [IsAuthenticated]
-    lookup_field = 'pk'
-
-# Classes para fazer o GET, POST, UPDATE e DELETE do sensor de temperatura
-class SensorTemperatureListCreateView(ListCreateAPIView):
-    queryset = SensorTemperature.objects.all()
-    serializer_class = SensorTemperatureSerializer
-    permission_classes = [IsAuthenticated]
-
-class SensorTemperatureRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = SensorTemperature.objects.all()
-    serializer_class = SensorTemperatureSerializer
-    permission_classes = [IsAuthenticated]
-    lookup_field = 'pk'
-
-# Classes para fazer o GET, POST, UPDATE e DELETE do sensor de umidade
-class SensorHumidityListCreateView(ListCreateAPIView):
-    queryset = SensorHumidity.objects.all()
-    serializer_class = SensorHumiditySerializer
-    permission_classes = [IsAuthenticated]
-
-class SensorHumidityRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = SensorHumidity.objects.all()
-    serializer_class = SensorHumiditySerializer
-    permission_classes = [IsAuthenticated]
-    lookup_field = 'pk'
-
-# Classes para fazer o GET, POST, UPDATE e DELETE do sensor de luminosidade
-class SensorLuminosityListCreateView(ListCreateAPIView):
-    queryset = SensorLuminosity.objects.all()
-    serializer_class = SensorLuminositySerializer
-    permission_classes = [IsAuthenticated]
-
-class SensorLuminosityRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = SensorLuminosity.objects.all()
-    serializer_class = SensorLuminositySerializer
+class SensorsRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    queryset = Sensor.objects.all()
+    serializer_class = SensorSerializer
     permission_classes = [IsAuthenticated]
     lookup_field = 'pk'
 

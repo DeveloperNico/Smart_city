@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Ambient, Historic, SensorTemperature, SensorHumidity, SensorLuminosity, SensorCounter
+from .models import User, Ambient, Historic, Sensor
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,33 +15,18 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
     
-class SensorTemperatureSerializer(serializers.ModelSerializer):
+class SensorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = SensorTemperature
-        fields = '__all__'
-    
-class SensorHumiditySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SensorHumidity
-        fields = '__all__'
-
-class SensorLuminositySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SensorLuminosity
-        fields = '__all__'
+        model = Sensor
+        fields = ['sensor', 'mac_address', 'unidade_medida', 'latitude', 'longitude', 'status']
+        extra_kwargs = {
+            'mac_address': {'validators': []}  # Disable MAC address validation for this serializer
+        }
 
 class AmbientsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ambient
         fields = '__all__'
-
-class SensorCounterSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SensorCounter
-        fields = '__all__'
-        extra_kwargs = {
-            'mac_address': {'validators': []} 
-        }
 
 class HistoricSerializer(serializers.ModelSerializer):
     class Meta:
