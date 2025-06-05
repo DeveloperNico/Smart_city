@@ -5,11 +5,11 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from .models import User, Ambient, Historic, Sensor
 from .permissions import IsAdmin
 from rest_framework import permissions, status
+from django.contrib.contenttypes.models import ContentType
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.contrib.auth.hashers import make_password
 import pandas as pd
 
 class Login(TokenObtainPairView):
@@ -98,9 +98,14 @@ class importHistoricExcelView(APIView):
             df = pd.read_excel(excel_file)
 
             for _, row in df.iterrows():
+                sensor = Sensor.objects.get(sensor=row['sensor'])
+                ambient = Ambient.objects.get(sig=row['ambient'])
+
                 Historic.objects.create(
-                    sensor= row['sensor'],
-                    ambient= row['ambient'],
+                    sensor_content_type=ContentType.objects.get_for_model(sensor),
+                    sensor_object_id=sensor.id,
+                    ambient_content_type=ContentType.objects.get_for_model(ambient),
+                    ambient_object_id=ambient.id,
                     valor=row['valor'],
                     timestamp=row['timestamp']
                 )

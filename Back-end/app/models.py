@@ -63,4 +63,6 @@ class Historic(models.Model):
         verbose_name_plural = 'Historics'
 
     def __str__(self):
-        return self.sensor.sensor + " - " + str(self.valor) + " at " + timezone.localtime(timezone.now()).strftime('%Y-%m-%d %H:%M:%S')
+        sensor_name = getattr(self.sensor, 'sensor', 'UnknownSensor')
+        return f"{sensor_name} - {self.valor} at {self.timestamp.strftime('%Y-%m-%d %H:%M:%S') if self.timestamp else 'No Timestamp'}"
+
