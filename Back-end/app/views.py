@@ -98,18 +98,24 @@ class importHistoricExcelView(APIView):
             df = pd.read_excel(excel_file)
 
             for _, row in df.iterrows():
-                sensor = Sensor.objects.get(sensor=row['sensor'])
-                ambient = Ambient.objects.get(sig=row['ambient'])
+                try:
+                    sensor = Sensor.objects.get(pk=int(row['sensor']))
+                    ambient = Ambient.objects.get(pk=int(row['ambiente']))
 
-                Historic.objects.create(
-                    sensor_content_type=ContentType.objects.get_for_model(sensor),
-                    sensor_object_id=sensor.id,
-                    ambient_content_type=ContentType.objects.get_for_model(ambient),
-                    ambient_object_id=ambient.id,
-                    valor=row['valor'],
-                    timestamp=row['timestamp']
-                )
+                    Historic.objects.create(
+                        sensor_content_type=ContentType.objects.get_for_model(sensor),
+                        sensor_object_id=sensor.id,
+                        ambient_content_type=ContentType.objects.get_for_model(ambient),
+                        ambient_object_id=ambient.id,
+                        valor=row['valor'],
+                        timestamp=row['timestamp']
+                    )
 
+                except Sensor.DoesNotExist:
+                    return Response({"error": f"Sensor with ID {row['sensor']} not found."}, status=status.HTTP_400_BAD_REQUEST)
+                except Ambient.DoesNotExist:
+                    return Response({"error": f"Ambient with SIG {row['ambient']} not found."}, status=status.HTTP_400_BAD_REQUEST)
+                
             return Response({"message": "Historic imported successfully"}, status=status.HTTP_201_CREATED)
         
         except Exception as e:
