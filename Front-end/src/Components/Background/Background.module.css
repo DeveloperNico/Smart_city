@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     width: 100vw;
-    height: 90vh;
+    height: 100vh;
     z-index: -1;
     background-image: url('../../assets/Images/background-image.png');
     background-size: cover;
