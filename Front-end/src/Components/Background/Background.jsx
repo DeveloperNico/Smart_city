@@ -1,12 +1,8 @@
-import styles from './Background.module.css';
-import { Header } from '../Header/Header';
-import { Home } from '../Home/Home';
+import React from "react";
+import styles from "./Background.module.css";
 
 export function Background() {
     return (
-        <div className={styles.background}>
-            <Header />
-            <Home />
-        </div>
+        <div className={styles.backgroundContainer}></div>
     )
 }
