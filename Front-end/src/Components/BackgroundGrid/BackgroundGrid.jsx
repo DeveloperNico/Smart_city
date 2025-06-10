@@ -1,26 +1,33 @@
-import React from "react";
-import styles from "./BackgroundGrid.module.css";
+import styles from './BackgroundGrid.module.css';
+import testImage from '../../assets/Images/teste.png';
 
 export function BackgroundGrid() {
-  const rows = 5; // número de cards por coluna
-  const cols = 4; // número de colunas
+  const totalColumns = 4;
+  const itemsPerColumn = 4;
 
   return (
-    <div className={styles.backgroundGrid}>
-      {[...Array(cols)].map((_, colIndex) => (
-        <div
-          key={colIndex}
-          className={`${styles.columnWrapper} ${
-            colIndex % 2 === 0 ? styles.scrollUp : styles.scrollDown
-          } ${colIndex % 3 === 0 ? styles.fast : styles.slow}`} // velocidade alternada
-        >
-          <div className={styles.gridColumn}>
-            {[...Array(rows * 2)].map((_, rowIndex) => (
-              <div key={rowIndex} className={styles.gridCard} />
-            ))}
+    <div className={styles.slider}>
+      {Array.from({ length: totalColumns }).map((_, columnIndex) => {
+        const isReversed = columnIndex % 2 !== 0;
+
+        return (
+          <div className={styles.column} key={columnIndex}>
+            <div className={`${styles.list} ${isReversed ? styles.reverse : ''}`}>
+              {Array.from({ length: itemsPerColumn }).map((_, itemIndex) => (
+                <div
+                  key={itemIndex}
+                  className={styles.item}
+                  style={{ '--position': itemIndex + 1 }}
+                >
+                  <div className={styles.skewFix}>
+                    <img src={testImage} alt="Grid item" />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
