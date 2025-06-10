@@ -1,88 +1,113 @@
-:root {
-  --width: 200px;
-  --height: 200px;
-  --quantity: 10;
-}
-
-/* Container principal centralizado */
 .slider {
   display: flex;
-  gap: 80px;
-  width: fit-content;
-  height: calc(var(--height) * 5);
-  padding: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-/* Cada coluna vertical */
-.column {
-  width: var(--width);
-  height: 100%;
-  position: relative;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
+  background-color: #1a1a1a; /* Adicionado para melhor visualização do fundo */
 }
 
-/* Lista inclinada para o efeito visual */
+.column {
+  width: 500px;
+  height: 100%; /* Ocupa a altura total do slider */
+  position: relative;
+  overflow: hidden; /* Garante que os itens fora da coluna não sejam visíveis */
+}
+
 .list {
   position: absolute;
-  width: var(--width);
-  height: 100%;
-  transform: skewY(-10deg);
-  transform-origin: bottom center;
-}
-
-/* Corrige a inclinação da imagem dentro da lista */
-.skewFix {
-  transform: skewY(10deg);
-  overflow: hidden;
   width: 100%;
   height: 100%;
 }
 
-/* Item da lista com animação para subir */
+.skewFix {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+/* Definindo variáveis CSS para altura do item */
+:root {
+  --item-height: 200px;
+  --item-margin-bottom: 20px;
+  --total-item-height: calc(var(--item-height) + var(--item-margin-bottom));
+}
+
+.container {
+  height: var(--item-height);
+  width: 100%;
+  margin-bottom: var(--item-margin-bottom);
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  height: 100%;
+  width: 100%;
+  background-color: #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+}
+
 .item {
-  width: var(--width);
-  height: var(--height);
   position: absolute;
   left: 0;
-  top: 100%;
-  animation: verticalRun 10s linear infinite;
-  animation-delay: calc((10s / var(--quantity)) * (var(--position) - 1));
-}
-
-/* Animação padrão: subir */
-@keyframes verticalRun {
-  from {
-    top: 100%;
-  }
-  to {
-    top: calc(var(--height) * -1);
-  }
-}
-
-/* Animação reversa: descer */
-@keyframes verticalRunReverse {
-  from {
-    top: calc(var(--height) * -1);
-  }
-  to {
-    top: 100%;
-  }
-}
-
-/* Aplica animação reversa nas colunas ímpares */
-.reverse .item {
-  top: calc(var(--height) * -1);
-  animation: verticalRunReverse 10s linear infinite;
-  animation-delay: calc((10s / var(--quantity)) * (var(--position) - 1));
-}
-
-/* Estilização da imagem */
-img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: var(--item-height);
+  top: 0; /* Começa no topo da coluna e é movido pela animação */
+  animation: verticalRun 20s linear infinite;
+  animation-delay: calc(
+    (20s / var(--quantity)) * (var(--position) - 1)
+  ); /* '--quantity' e '--position' vêm do JS */
+}
+
+/* Animação de descida */
+@keyframes verticalRun {
+  0% {
+    transform: translateY(
+      100%
+    ); /* Começa 100% abaixo da altura do container da coluna */
+  }
+  100% {
+    transform: translateY(
+      calc(-1 * var(--total-item-height) * var(--quantity))
+    ); /* Termina acima, para criar o loop */
+  }
+}
+
+/* Animação de subida (reversa) */
+.reverse .item {
+  animation: verticalRunReverse 20s linear infinite;
+  animation-delay: calc(
+    (20s / var(--quantity)) * (var(--position) - 1)
+  ); /* Mantém o delay */
+}
+
+@keyframes verticalRunReverse {
+  0% {
+    transform: translateY(
+      calc(-1 * var(--total-item-height) * var(--quantity))
+    ); /* Começa acima */
+  }
+  100% {
+    transform: translateY(
+      100%
+    ); /* Termina 100% abaixo, para criar o loop */
+  }
 }
