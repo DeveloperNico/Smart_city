@@ -1,46 +1,111 @@
 :root {
-    --height: 300px;
-    --width: 500px;
+    --height: 200px;
+    --width: 300px;
     --quantity: 10;
 }
 
+body {
+    overflow: hidden;
+    background-color: #424242;
+}
+
+/* Container geral que organiza tudo */
+.container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    z-index: 0;
+}
+
+/* Camada preta na frente */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Cada slider individual */
 .slider {
+    position: relative;
+    padding: 10px 0;
     width: 100%;
     height: var(--height);
     overflow: hidden;
+    z-index: 1;
+
     mask-image: linear-gradient(
         to right,
         transparent,
-        #000 10% 90%,
+        #000000 10% 90%,
         transparent
     );
 }
 
-.slider .list {
+/* Cada lista dentro do slider */
+.list,
+.list2,
+.list3,
+.list4 {
     display: flex;
     width: 100%;
     min-width: calc(var(--width) * var(--quantity));
     position: relative;
 }
 
-.slider .list .item {
+/* Cada item animado */
+.item {
     width: var(--width);
     height: var(--height);
     position: absolute;
     left: 100%;
-    animation: autoRun 80s linear infinite;
-    animation-delay: calc( (-80s / var(--quantity)) * (var(--position) - 1) );
 }
 
-.slider .list .item img {
-    width: 500px;
-    height: 300px;
+.list .item {
+    animation: autoRun 150s linear infinite;
+    animation-delay: calc((-150s / var(--quantity)) * (var(--position) - 1));
 }
 
+.list2 .item {
+    animation: autoRunReverse 150s linear infinite;
+    animation-delay: calc((-150s / var(--quantity)) * (var(--position) - 1));
+}
+
+.list3 .item {
+    animation: autoRun 150s linear infinite;
+    animation-delay: calc((-150s / var(--quantity)) * (var(--position) - 1));
+}
+
+.list4 .item {
+    animation: autoRunReverse 150s linear infinite;
+    animation-delay: calc((-150s / var(--quantity)) * (var(--position) - 1));
+}
+
+/* Imagens */
+.item img {
+    width: 300px;
+    height: 200px;
+}
+
+/* Animações */
 @keyframes autoRun {
     from {
         left: 100%;
-    } to {
+    }
+    to {
         left: calc(var(--width) * -1);
+    }
+}
+
+@keyframes autoRunReverse {
+    from {
+        left: calc(var(--width) * -1);
+    }
+    to {
+        left: 100%;
     }
 }
