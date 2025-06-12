@@ -16,7 +16,7 @@
         rgba(32, 32, 32, 0) 70%,    /* Transição suave para transparente em 15% */
         transparent 10%                /* Azul totalmente opaco a partir de 20% */
     );
-    /* border: 2px solid red; */
+    /* background-image: radial-gradient(ellipse farthest-corner at 0 140%, #3c84cc 0%, #316dc2 70%, #4e95d3 70%); Teste para fazer uma curva no background, irei testar depois */
     color: var(--color-white);
     font-family: var(--font-main);
 }

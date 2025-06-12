@@ -36,6 +36,7 @@ const StyledWrapper = styled.div`
     cursor: pointer;
     overflow: hidden;
     transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    margin-top: 40px;
   }
 
   .animated-button svg {
@@ -61,7 +62,7 @@ const StyledWrapper = styled.div`
     transform: translate(-50%, -50%);
     width: 20px;
     height: 20px;
-      background: linear-gradient(90deg,rgb(1, 14, 165), #BC40BC);
+    background: linear-gradient(90deg,rgb(1, 14, 165), #BC40BC);
     border-radius: 50%;
     opacity: 0;
     transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);

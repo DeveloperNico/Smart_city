@@ -8,7 +8,7 @@ export function Header() {
             <div className={styles.linksHeader}>
                 <a href="#">Home</a>
                 <a href="#">About Us</a>
-                <a href="#">Login</a>
+                {/* <a href="#">Login</a> */}
             </div>
         </header>
     )
