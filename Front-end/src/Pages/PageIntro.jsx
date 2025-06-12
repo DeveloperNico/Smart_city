@@ -7,6 +7,7 @@ import { BackgroundGrid } from "../Components/BackgroundGrid/BackgroundGrid";
 export function PageIntro() {
     return (
         <div>
+            <Header />
             <BackgroundGrid />
         </div>
     )

@@ -1,16 +1,21 @@
 @import '../../styles/variable.css';
 
 .headerContainer {
+    position: relative;
+    z-index: 100;
+    width: 100%;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 60px 100px;
+    align-items: center;
+    padding: 30px 80px;
+    background: linear-gradient(to right, #040e7e, #8e009b);
+    color: white;
 }
 
 .linksHeader {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 40px;
     font-size: 18px;
     font-weight: bold;
     font-family: var(--font-main);
