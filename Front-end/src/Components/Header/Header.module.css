@@ -8,14 +8,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 30px 80px;
-    background: linear-gradient(
-        to right,
-        rgba(32, 32, 32, 1) 0%,      /* Preto sólido no início */
-        rgba(32, 32, 32, 0.8) 48%,   /* Transição suave */
-        rgb(17, 24, 109) 60%,    /* Azul sólido no final */
-        #0c1468 100%
-    );
     color: white;
+    transition: background 0.3s ease-in-out;
 }
 
 .linksHeader {
@@ -30,4 +24,19 @@
 .linksHeader a {
     text-decoration: none;
     color: var(--color-white);
+}
+
+.headerBlack {
+    background: linear-gradient(
+    to right,
+    rgba(32, 32, 32, 1) 0%,      /* Preto sólido no início */
+    rgba(32, 32, 32, 0.8) 48%,   /* Transição suave */
+    rgb(17, 24, 109) 60%,    /* Azul sólido no final */
+    #A200B1 100%
+);
+}
+
+.headerRed {
+  background: linear-gradient(to right, #0c146d, #A200B1);
+  transition: backgrond 0.3s ease-in-out;
 }
