@@ -36,12 +36,12 @@ class Ambient(models.Model):
         message='O SIG deve conter exatamente 8 números.'
     )
     sig = models.IntegerField(validators=[validator_sig])
-    descricao = models.CharField(max_length=20, blank=True, null=True)
+    descricao = models.CharField(max_length=100, blank=True, null=True)
     validator_ni = RegexValidator (
         regex=r'^(SN\d{5}|\d{7})$',
         message='O NI deve ser no formato SNXXXXX ou XXXXXXX (onde X é um dígito).'
     )
-    ni = models.CharField(max_length=8, blank=True, null=True, validators=[validator_ni])
+    ni = models.CharField(max_length=10, blank=True, null=True, validators=[validator_ni])
     responsavel = models.CharField(max_length=100, blank=True, null=True)
     
     def __str__(self):
