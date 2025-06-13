@@ -28,4 +28,5 @@
 .text {
     margin-top: 20px;
     gap: 10px;
+    line-height: 1.6;
 }

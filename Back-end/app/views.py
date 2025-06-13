@@ -31,7 +31,7 @@ class UserRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'pk'
 
 # Classe para importar todos sensores via Excel
-class importSensorsExcelView(APIView):
+class ImportSensorsExcelView(APIView):
     parser_classes = [MultiPartParser]
     permission_classes = [IsAuthenticated]
 
@@ -67,7 +67,7 @@ class importSensorsExcelView(APIView):
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 # Classe para importar ambientes via Excel
-class importAmbientsExcelView(APIView):
+class ImportAmbientsExcelView(APIView):
     parser_classes = [MultiPartParser]
     permission_classes = [IsAuthenticated]
 
@@ -95,7 +95,7 @@ class importAmbientsExcelView(APIView):
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 # Classe para importar histórico via Excel
-class importHistoricExcelView(APIView):
+class ImportHistoricExcelView(APIView):
     parser_classes = [MultiPartParser]
     permission_classes = [IsAuthenticated]
 

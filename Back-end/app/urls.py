@@ -7,9 +7,9 @@ urlpatterns = [
     path('users/<int:pk>/', UserRetriveUpdateDestroyView.as_view(), name='user-retrieve-update-destroy'),
 
     # Endpoints para importação de sensores via Excel -----------------------------------------------------------------------------
-    path('ambients/import/', importAmbientsExcelView.as_view(), name='import-ambients-excel'),
-    path('historic/import/', importHistoricExcelView.as_view(), name='import-historic-excel'),
-    path('sensors/import/', importSensorsExcelView.as_view(), name='import-sensors-excel'),
+    path('ambients/import/', ImportAmbientsExcelView.as_view(), name='import-ambients-excel'),
+    path('historic/import/', ImportHistoricExcelView.as_view(), name='import-historic-excel'),
+    path('sensors/import/', ImportSensorsExcelView.as_view(), name='import-sensors-excel'),
     # -----------------------------------------------------------------------------------------------------------------------------
     
     # Importação de sensores de luminosidade, temperatura, umidade e contadores GET, POST, PUT, DELETE ----------------------------
