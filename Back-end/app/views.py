@@ -10,7 +10,9 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.http import HttpResponse
 import pandas as pd
+import io
 
 class Login(TokenObtainPairView):
     serializer_class = LoginSerializer
@@ -120,6 +122,58 @@ class importHistoricExcelView(APIView):
         
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+# Classe para exportar sensores para Excel
+class ExportSensorsExcelView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        sensors = Sensor.objects.all().values(
+            'id', 'sensor', 'mac_address', 'unidade_medida', 'latitude', 'longitude', 'status'
+        )
+
+        df = pd.DataFrame(list(sensors))
+        buffer = io.BytesIO()
+        df.to_excel(buffer, index=False)
+
+        buffer.seek(0)
+        response = HttpResponse(buffer, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename="sensors_export.xlsx"'
+        return response
+    
+# Classe para exportar ambientes para Excel
+class ExportAmbientsExcelView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        ambients = Ambient.objects.all().values('id', 'sig', 'descricao', 'ni', 'responsavel')
+        df = pd.DataFrame(list(ambients))
+        buffer = io.BytesIO()
+        df.to_excel(buffer, index=False)
+
+        buffer.seek(0)
+        response = HttpResponse(buffer, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename="ambients_export.xlsx"'
+        return response
+
+# Classe para exportar histórico para Excel
+class ExportHistoricExcelView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        historics = Historic.objects.all().values(
+            'id', 'sensor_object_id', 'ambient_object_id', 'valor', 'timestamp'
+        )
+        df = pd.DataFrame(list(Historic.objects.all().values()))
+        if 'timestamp' in df.columns:
+            df['timestamp'] = pd.to_datetime(df['timestamp']).dt.tz_localize(None)
+        buffer = io.BytesIO()
+        df.to_excel(buffer, index=False)
+
+        buffer.seek(0)
+        response = HttpResponse(buffer, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename="historic_export.xlsx"'
+        return response
         
 # Classe para fazer o GET, POST, UPDATE e DELETE dos sensores
 class SensorsListCreateView(ListCreateAPIView):
