@@ -6,7 +6,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
     height: 100vh;
     width: 80vw;
     padding-left: 150px;
@@ -18,7 +17,12 @@
     );
     color: var(--color-white);
 }
-
+.oi{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height: 60%;
+}
 .title {
     font-size: 60px;
     margin-bottom: 20px;
@@ -31,4 +35,12 @@
     line-height: 1.6;
     font-family: var(--font-huninn);
     font-size: 18px;
+}
+
+.buttonScroll {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    width: 35vw;
+    height: 35%;
 }

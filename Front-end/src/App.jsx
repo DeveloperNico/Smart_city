@@ -1,11 +1,16 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { PageIntro } from "./Pages/PageIntro";
 
 function App() {
     return (
-        <>
-            <PageIntro />
-        </>
+        <Router>
+            <Routes>
+
+                <Route path="/" element={<PageIntro/>} />
+
+            </Routes>
+        </Router>
     );
 }
 

@@ -5,10 +5,10 @@ export function Header() {
     return (
         <header className={styles.headerContainer}>
             <img src={Logo} alt="Minha logo" />
-            <div className={styles.linksHeader}>
-                <a href="#">Home</a>
-                <a href="#">About Us</a>
-            </div>
+            <nav className={styles.linksHeader}>
+                <a href="#home" className={styles.link}>Home</a>
+                <a href="#about">About Us</a>
+            </nav>
         </header>
     )
 }
