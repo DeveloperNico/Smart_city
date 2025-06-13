@@ -181,6 +181,17 @@ class SensorsListCreateView(ListCreateAPIView):
     serializer_class = SensorSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        sensor = self.request.query_params.get('sensor')
+
+        # Se o tipo for informado, filtra por tipo (campo sensor)
+        if sensor:
+            queryset = queryset.filter(sensor__iexact=sensor)
+
+        return queryset
+
 class SensorsRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
