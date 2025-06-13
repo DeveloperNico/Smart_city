@@ -4,9 +4,8 @@ from .serializers import UserSerializer, AmbientsSerializer, HistoricSerializer,
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .models import User, Ambient, Historic, Sensor
 from .permissions import IsAdmin
-from rest_framework import permissions, status
-from django.contrib.contenttypes.models import ContentType
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework import status
+from django.contrib.contenttypes.models import ContentType  
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -14,14 +13,17 @@ from django.http import HttpResponse
 import pandas as pd
 import io
 
+# Classe de login utilizando JWT com serializer personalizado
 class Login(TokenObtainPairView):
     serializer_class = LoginSerializer
 
+# Classe para listar e criar usuários (restrita a admins)
 class UserListCreateView(ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAdmin]
 
+# Classe para recuperar, atualizar e deletar usuários (restrita a admins)
 class UserRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -30,10 +32,11 @@ class UserRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 
 # Classe para importar todos sensores via Excel
 class importSensorsExcelView(APIView):
-    perser_classes = [MultiPartParser]
+    parser_classes = [MultiPartParser]
     permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
+        # Recupera todos os arquivos enviados com o nome 'files'
         excel_files = request.FILES.getlist('files')
         if not excel_files:
             return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
@@ -41,9 +44,11 @@ class importSensorsExcelView(APIView):
         try:
             total_imported = 0
 
+            # Itera sobre cada arquivo recebido
             for excel_file in excel_files:
-                df = pd.read_excel(excel_file)
+                df = pd.read_excel(excel_file)  # Lê o Excel em um DataFrame
 
+                # Para cada linha no Excel, cria um novo Sensor
                 for _, row in df.iterrows():
                     Sensor.objects.create(
                         sensor=row['sensor'],
@@ -58,14 +63,16 @@ class importSensorsExcelView(APIView):
             return Response({"message": f"{total_imported} sensors successfully imported from  {len(excel_files)} files(s)."}, status=status.HTTP_201_CREATED)
         
         except Exception as e:
+            # Retorna erro caso algo falhe
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        
+
 # Classe para importar ambientes via Excel
 class importAmbientsExcelView(APIView):
-    perser_classes = [MultiPartParser]
+    parser_classes = [MultiPartParser]
     permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
+        # Recupera o arquivo Excel enviado com o nome 'file'
         excel_file = request.FILES.get('file')
         if not excel_file:
             return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
@@ -73,6 +80,7 @@ class importAmbientsExcelView(APIView):
         try:
             df = pd.read_excel(excel_file)
 
+            # Para cada linha do Excel, cria um novo Ambiente
             for _, row in df.iterrows():
                 Ambient.objects.create(
                     sig=row['sig'],
@@ -85,13 +93,14 @@ class importAmbientsExcelView(APIView):
         
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        
+
 # Classe para importar histórico via Excel
 class importHistoricExcelView(APIView):
-    perser_classes = [MultiPartParser]
+    parser_classes = [MultiPartParser]
     permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
+        # Recupera o arquivo Excel enviado com o nome 'file'
         excel_file = request.FILES.get('file')
         if not excel_file:
             return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
@@ -99,6 +108,7 @@ class importHistoricExcelView(APIView):
         try:
             df = pd.read_excel(excel_file)
 
+            # Para cada linha, busca os objetos Sensor e Ambient, e cria um histórico
             for _, row in df.iterrows():
                 try:
                     sensor = Sensor.objects.get(pk=int(row['sensor']))
@@ -113,8 +123,10 @@ class importHistoricExcelView(APIView):
                         timestamp=row['timestamp']
                     )
 
+                # Valida se sensor existe
                 except Sensor.DoesNotExist:
                     return Response({"error": f"Sensor with ID {row['sensor']} not found."}, status=status.HTTP_400_BAD_REQUEST)
+                # Valida se ambiente existe
                 except Ambient.DoesNotExist:
                     return Response({"error": f"Ambient with SIG {row['ambient']} not found."}, status=status.HTTP_400_BAD_REQUEST)
                 
@@ -122,36 +134,41 @@ class importHistoricExcelView(APIView):
         
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        
+
 # Classe para exportar sensores para Excel
 class ExportSensorsExcelView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
+        # Coleta todos os sensores do banco de dados
         sensors = Sensor.objects.all().values(
             'id', 'sensor', 'mac_address', 'unidade_medida', 'latitude', 'longitude', 'status'
         )
 
+        # Converte para DataFrame e cria arquivo Excel em memória
         df = pd.DataFrame(list(sensors))
         buffer = io.BytesIO()
         df.to_excel(buffer, index=False)
 
         buffer.seek(0)
+        # Retorna resposta com Excel para download
         response = HttpResponse(buffer, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = 'attachment; filename="sensors_export.xlsx"'
         return response
-    
+
 # Classe para exportar ambientes para Excel
 class ExportAmbientsExcelView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
+        # Coleta todos os ambientes do banco de dados
         ambients = Ambient.objects.all().values('id', 'sig', 'descricao', 'ni', 'responsavel')
         df = pd.DataFrame(list(ambients))
         buffer = io.BytesIO()
         df.to_excel(buffer, index=False)
 
         buffer.seek(0)
+        # Retorna resposta com Excel para download
         response = HttpResponse(buffer, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = 'attachment; filename="ambients_export.xlsx"'
         return response
@@ -165,16 +182,20 @@ class ExportHistoricExcelView(APIView):
             'id', 'sensor_object_id', 'ambient_object_id', 'valor', 'timestamp'
         )
         df = pd.DataFrame(list(Historic.objects.all().values()))
+
+        # Remove o fuso horário do timestamp, se existir
         if 'timestamp' in df.columns:
             df['timestamp'] = pd.to_datetime(df['timestamp']).dt.tz_localize(None)
+            
         buffer = io.BytesIO()
         df.to_excel(buffer, index=False)
-
         buffer.seek(0)
+
+        # Retorna resposta com Excel para download
         response = HttpResponse(buffer, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = 'attachment; filename="historic_export.xlsx"'
         return response
-        
+
 # Classe para fazer o GET, POST, UPDATE e DELETE dos sensores
 class SensorsListCreateView(ListCreateAPIView):
     queryset = Sensor.objects.all()
@@ -184,6 +205,7 @@ class SensorsListCreateView(ListCreateAPIView):
     def get_queryset(self):
         queryset = super().get_queryset()
 
+        # Permite filtrar sensores pelo nome via query param
         sensor = self.request.query_params.get('sensor')
 
         # Se o tipo for informado, filtra por tipo (campo sensor)
