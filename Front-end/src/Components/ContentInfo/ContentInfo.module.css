@@ -17,16 +17,18 @@
         transparent 10%                /* Azul totalmente opaco a partir de 20% */
     );
     color: var(--color-white);
-    font-family: var(--font-main);
 }
 
 .title {
     font-size: 60px;
     margin-bottom: 20px;
+    font-family: var(--font-main);
 }
 
 .text {
     margin-top: 20px;
     gap: 10px;
     line-height: 1.6;
+    font-family: var(--font-huninn);
+    font-size: 18px;
 }
