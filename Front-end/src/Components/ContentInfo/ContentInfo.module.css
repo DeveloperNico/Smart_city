@@ -17,12 +17,14 @@
     );
     color: var(--color-white);
 }
-.oi{
+
+.contentPrincipal {
     display: flex;
     flex-direction: column;
     justify-content: end;
     height: 60%;
 }
+
 .title {
     font-size: 60px;
     margin-bottom: 20px;
@@ -43,4 +45,8 @@
     justify-content: center;
     width: 35vw;
     height: 35%;
+}
+
+.navLink {
+    text-decoration: none;
 }
