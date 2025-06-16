@@ -1,13 +1,29 @@
 import styles from './AboutUs.module.css';
 import fotoPerfil from '../../assets/Images/foto-pessoal.jpeg';
 import LogoPreta from '../../assets/Icons/Logo-preta.svg';
-
+import { useEffect } from 'react';
 
 export function AboutUs() {
+    useEffect(() => {
+        const reveals = document.querySelectorAll(`.${styles.reveal}`);
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add(styles.active);
+                    // Se quiser que a animação só ocorra uma vez, você pode desativar o observer
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.9 });
+
+        reveals.forEach((el) => observer.observe(el));
+    }, []);
+
     return (
         <>
             <div className={styles.container}>
-                <div className={styles.aboutMe}>
+                <div className={`${styles.aboutMe} ${styles.reveal}`}>
                     <figure>
                         <img src={fotoPerfil} alt="Image for About Us" />
                     </figure>
@@ -23,7 +39,7 @@ export function AboutUs() {
                     </div>
                 </div>
 
-                <div className={styles.aboutSystem}>
+                <div className={`${styles.aboutSystem} ${styles.reveal}`}>
                     <h2>About</h2>
                     <figure>
                         <img src={LogoPreta} alt="" />
