@@ -43,7 +43,17 @@ export function Sensors() {
                 </div>
 
                 <div className={styles.list}>
-                    
+                    {sensors 
+                        .map(sensor => (
+                        <div className={styles.card} key={sensor.id}>
+                            <h2>{sensor.sensor}</h2>
+                            <p><strong>Mac address:</strong> {sensor.mac_address}</p>
+                            <p><strong>Unit of measurement:</strong> {sensor.unidade_medida}</p>
+                            <p><strong>Latitude:</strong> {sensor.latitude}</p>
+                            <p><strong>Longitude:</strong> {sensor.longitude}</p>
+                            <p><strong>Status:</strong> {sensor.status}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
