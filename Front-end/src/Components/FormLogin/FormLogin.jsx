@@ -77,13 +77,13 @@ export function FormLogin() {
                     <div className={styles.formHeader}>
                         <h2 className={styles.title}>Login</h2>
                         <div className={styles.username}>
-                            <label>Nome de usuário:</label>
-                            <input className={styles.input} type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+                            <label>Username:</label>
+                            <input className={styles.input} type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Type here..."/>
                             {errors.username && <span className={styles.error}>{errors.username}</span>}
                         </div>
                         <div className={styles.password}>
-                            <label>Senha:</label>
-                            <input className={styles.input} type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <label>Password:</label>
+                            <input className={styles.input} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••••"/>
                             {errors.password && <span className={styles.error}>{errors.password}</span>}
                         </div>
 
