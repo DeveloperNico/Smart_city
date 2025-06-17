@@ -1,6 +1,74 @@
+@import '../../styles/variable.css';
+
 .menu {
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
-    height: 100vh;
+    height: 60vh;
+    font-family: var(--font-main);
+
+    & h2 {
+        cursor: default;
+    }
+}
+
+.container {
+    display: flex;
+    gap: 100px;
+    margin-top: 40px;
+}
+
+.card {
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+    padding: 0 50px;
+    cursor: pointer;
+}
+
+.card a {
+    text-decoration: none;
+    color: var(--color-white);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.card1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #203491;
+
+    & .radio {
+        width: 100px;
+        height: 100px;
+        color: #07144e;
+    }
+}
+
+.card2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #59218d;
+
+    & .houseWifi {
+        width: 100px;
+        height: 100px;
+        color: #341452;
+    }
+}
+
+.card3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #b00193;
+
+    & .history {
+        width: 100px;
+        height: 100px;
+        color: #6e005c;
+    }
 }

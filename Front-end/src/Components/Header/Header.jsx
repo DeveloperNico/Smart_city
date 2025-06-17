@@ -6,7 +6,7 @@ export function Header({ className = "headerRed" }) {
         <header className={`${styles.headerContainer} ${styles[className]}`}>
             <img src={Logo} alt="Minha logo" />
             <nav className={styles.linksHeader}>
-                <a href="#home" className={styles.link}>Home</a>
+                <a href="/" className={styles.link}>Home</a>
                 <a href="/login">Login</a>
             </nav>
         </header>
