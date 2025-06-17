@@ -9,12 +9,12 @@ import ImageSmart from '../../assets/Images/Innovation-amico.svg';
 const loginSchema = z.object({
     username: z
         .string()
-        .min(3, "Nome de usuário deve ter pelo menos 3 caracteres")
-        .max(15, "Nome de usuário deve ter no máximo 15 caracteres"),
+        .min(3, "The username must be at least 3 characters.")
+        .max(15, "The username must have a maximum 15 characters."),
     password: z
         .string()
-        .min(1, "Senha é obrigatória")
-        .max(15, "Senha deve ter no máximo 15 caracteres"),
+        .min(1, "Password required")
+        .max(15, "The password must have a maximum 15 characters."),
 });
 
 export function FormLogin() {
@@ -49,6 +49,13 @@ export function FormLogin() {
             const { access, refresh } = response.data;
             localStorage.setItem("access", access);
             localStorage.setItem("refresh", refresh);
+
+            const userRes = await axios.get("http://127.0.0.1:8000/api/me/", {
+                headers: { Authorization: `Bearer ${access}` }
+            });
+
+            const usernameFromApi = userRes.data.username;
+            localStorage.setItem("username",usernameFromApi);
             
             navigate("/home");
         } catch (error) {

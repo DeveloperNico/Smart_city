@@ -8,10 +8,17 @@ from rest_framework import status
 from django.contrib.contenttypes.models import ContentType  
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.http import HttpResponse
 import pandas as pd
 import io
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_me(request):
+    serializer = UserSerializer(request.user)
+    return Response(serializer.data)
 
 # Classe de login utilizando JWT com serializer personalizado
 class Login(TokenObtainPairView):
