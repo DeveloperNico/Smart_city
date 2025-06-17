@@ -33,6 +33,7 @@
     font-weight: 500;
     line-height: 1.6;
     margin-bottom: 16px;
+    text-align: justify;
 }
 
 .aboutSystem {
@@ -54,12 +55,13 @@
     font-size: 20px;
     margin-bottom: 16px;
     font-family: var(--font-huninn);
+    text-align: justify
 }
 
 .reveal {
     opacity: 0;
     transform: translateY(20px);
-    transition: all 1.2s ease-out;
+    transition: all 1.5s ease-out;
 }
 
 .reveal.active {

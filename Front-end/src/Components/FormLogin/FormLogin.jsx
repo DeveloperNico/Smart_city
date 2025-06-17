@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { set, z } from 'zod';
 import { BackgroundGrid } from '../BackgroundGrid/BackgroundGrid';
-import ImageSmart from '../../assets/Images/Smart home-cuate.svg';
+import ImageSmart from '../../assets/Images/Innovation-amico.svg';
 
 const loginSchema = z.object({
     username: z
