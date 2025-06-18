@@ -12,6 +12,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.http import HttpResponse
 import pandas as pd
+from django.utils.dateparse import parse_datetime
 import io
 
 @api_view(['GET'])
@@ -135,7 +136,7 @@ class ImportHistoricExcelView(APIView):
                     return Response({"error": f"Sensor with ID {row['sensor']} not found."}, status=status.HTTP_400_BAD_REQUEST)
                 # Valida se ambiente existe
                 except Ambient.DoesNotExist:
-                    return Response({"error": f"Ambient with SIG {row['ambient']} not found."}, status=status.HTTP_400_BAD_REQUEST)
+                    return Response({"error": f"Ambient with SIG {row['ambiente']} not found."}, status=status.HTTP_400_BAD_REQUEST)
                 
             return Response({"message": "Historic imported successfully"}, status=status.HTTP_201_CREATED)
         
@@ -244,6 +245,42 @@ class HistoricListCreateView(ListCreateAPIView):
     queryset = Historic.objects.all()
     serializer_class = HistoricSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        sensor_id = self.request.query_params.get('sensor_id')
+        ambient_id = self.request.query_params.get('ambient_id')
+        historic_id = self.request.query_params.get('historic_id')
+        start_date = self.request.query_params.get('start_date')
+        end_date = self.request.query_params.get('end_date')
+        sensor_type = self.request.query_params.get('sensor')
+
+        if historic_id:
+            queryset = queryset.filter(id=historic_id)
+
+        if sensor_id:
+            queryset = queryset.filter(sensor_object_id=sensor_id)
+
+        if ambient_id:
+            queryset = queryset.filter(ambient_object_id=ambient_id)
+
+        if start_date:
+            start_date_parsed = parse_datetime(start_date)
+            if start_date_parsed:
+                queryset = queryset.filter(timestamp__gte=start_date_parsed)
+
+        if end_date:
+            end_date_parsed = parse_datetime(end_date)
+            if end_date_parsed:
+                queryset = queryset.filter(timestamp__lte=end_date_parsed)
+
+        if sensor_type:
+            # Busca os sensores que possuem esse tipo e filtra os históricos por eles
+            sensor_ids = Sensor.objects.filter(sensor__iexact=sensor_type).values_list('id', flat=True)
+            queryset = queryset.filter(sensor_object_id__in=sensor_ids)
+
+        return queryset
 
 class HistoricRetriveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Historic.objects.all()
