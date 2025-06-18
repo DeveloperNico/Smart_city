@@ -1,6 +1,8 @@
 import styles from './AboutUs.module.css';
 import fotoPerfil from '../../assets/Images/foto-pessoal.jpeg';
 import LogoPreta from '../../assets/Icons/Logo-preta.svg';
+import ButtonGithub from '../../Components/Components-Uiverse/ButtonGithub/ButtonGithub';
+import ButtonLinkedin from '../../Components/Components-Uiverse/ButtonLinkedin/ButtonLinkedin';
 import { useEffect } from 'react';
 
 export function AboutUs() {
@@ -30,11 +32,16 @@ export function AboutUs() {
 
                     <div>
                         <div>
-                            <p>Hi, my name is Nicolas Duarte. I'm a developer with a passion for technology, always looking for innovative solutions that make a difference to people's daily lives.</p>
+                            <p>Hi, my name is Nicolas Duarte. I'm 19 years old an currently a Digtal Solutions Apprentice at Bosch.</p>
 
-                            <p>I have a dedicated, optimistic profile and believe in the power of technology to transform realities.</p>
+                            <p>I'm studying System Development at SENAI and pursuing a degree in Systems Analysis and Development at UNIP.</p>
 
-                            <p>Throughout my career, I have specialized in creating intelligent systems focused on efficiency, practicality and collective well-being.</p>
+                            <p>Wants to know more about me and about my projects and skills? <br/> Check out my social medias below.</p>
+
+                            <div className={styles.socialMedias}>
+                                <a href="https://github.com/DeveloperNico" target='_blank'><ButtonGithub/></a>
+                                <a href="https://www.linkedin.com/in/nicolas-duarte-dev/" target='_blank'><ButtonLinkedin/></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,6 +62,7 @@ export function AboutUs() {
                             More than just a system, this platform is a step forward in building a more sustainable, connected, and inclusive city. 
                             It reflects a commitment to innovation and social responsibility, making technology a true ally in transforming the future of urban living.
                         </p>
+
                     </div>
 
                 </div>

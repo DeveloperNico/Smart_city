@@ -68,3 +68,8 @@
     opacity: 1;
     transform: translateY(0);
 }
+
+.socialMedias {
+    display: flex;
+    gap: 30px;
+}
