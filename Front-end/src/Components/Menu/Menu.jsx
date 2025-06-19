@@ -29,7 +29,7 @@ export function Menu() {
 
     return (
         <div className={styles.menu}>
-            <h2>Seja bem-vindo(a), {name}!</h2>
+            <h2>Welcome, {name}!</h2>
             <div className={styles.container}>
                 <div className={`${styles.card} ${styles.card1}`} onClick={() => setSelectedCard('sensors')}>
                     <a href="#">Sensors</a>

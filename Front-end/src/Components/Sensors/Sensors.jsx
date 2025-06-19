@@ -16,6 +16,7 @@ export function Sensors() {
             }
         })
         .then(response => {
+            console.log("Sensores recebidos: ", response.data);
             setTimeout(() => {
                 setSensors(response.data.sensors || response.data);
                 setLoading(false);
@@ -29,10 +30,7 @@ export function Sensors() {
 
     if (loading) {
         return (
-            <Loading className={styles.loadingContainer}>
-                <div className={styles.spinner}></div>
-                <p>Carregando sensores...</p>
-            </Loading>
+            <Loading className={styles.loadingContainer} />
         );
     }
 
