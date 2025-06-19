@@ -1,5 +1,6 @@
 import styles from './Sensors.module.css';
 import { useState, useEffect } from 'react';
+import Loading from '../Components-Uiverse/Loading/Loading';
 import api from '../../api/axios';
 
 export function Sensors() {
@@ -18,7 +19,7 @@ export function Sensors() {
             setTimeout(() => {
                 setSensors(response.data.sensors || response.data);
                 setLoading(false);
-            }, 1000);
+            }, 2000);
         })
         .catch(error => {
             console.error("Failed to search sensors: ", error);
@@ -28,10 +29,10 @@ export function Sensors() {
 
     if (loading) {
         return (
-            <div className={styles.loadingContainer}>
+            <Loading className={styles.loadingContainer}>
                 <div className={styles.spinner}></div>
                 <p>Carregando sensores...</p>
-            </div>
+            </Loading>
         );
     }
 
