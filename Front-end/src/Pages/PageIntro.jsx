@@ -56,7 +56,7 @@ export function PageIntro() {
 
     return (
         <div>
-            <Header className={headerColor === 'red' ? 'headerRed' : 'headerBlack'} />
+            <Header className={headerColor === 'red' ? 'headerGradient' : 'headerBlack'} />
 
             <div id="home">
                 <BackgroundGrid />
