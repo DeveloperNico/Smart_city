@@ -39,7 +39,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #203491;
+    background-color: var(--color-blue);
 
     & .radio {
         width: 100px;
@@ -52,7 +52,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #59218d;
+    background-color: var(--color-purple);
 
     & .houseWifi {
         width: 100px;
@@ -65,7 +65,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #b00193;
+    background-color: var(--color-pink);
 
     & .history {
         width: 100px;

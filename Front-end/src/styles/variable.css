@@ -4,8 +4,14 @@
 
 :root {
     /* Colors */
-    --color-white: #fff;
-    --color-black: #000;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-blue: #203491;
+    --color-purple: #59218d;
+    --color-pink: #b00193;
+
+    /* Gradient */
+    --gradient-color: linear-gradient(to right, #0c146d, #A200B1);
 
     /* Fonts */
     --font-main: 'Poppins', sans-serif;

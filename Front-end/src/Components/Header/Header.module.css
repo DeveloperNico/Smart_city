@@ -8,7 +8,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 30px 80px;
-    color: white;
+    color: var(--color-white);
     transition: background 0.3s ease-in-out;
 }
 
@@ -36,7 +36,7 @@
 );
 }
 
-.headerRed {
-  background: linear-gradient(to right, #0c146d, #A200B1);
+.headerGradient {
+  background: var(--gradient-color);
   transition: backgrond 0.3s ease-in-out;
 }
