@@ -32,7 +32,7 @@ export function Historic() {
                 // Criar um mapa id -> nome sensor
                 const sensorMap = {};
                 sensors.forEach(sensor => {
-                    sensorMap[sensor.id] = sensor.sensor; // sensor.sensor é o nome do sensor
+                    sensorMap[sensor.id] = sensor.sensor_object_id; // sensor.sensor é o nome do sensor
                 });
 
                 // Criar um mapa id -> descrição do ambiente
@@ -51,13 +51,14 @@ export function Historic() {
                 setLoading(false);
             }
         };
-
+        
         fetchData();
     }, []);
-
+    
     if (loading) {
         return <Loading className={styles.loadingContainer} />;
     }
+    
 
     return (
         <div className={styles.center}>
@@ -71,12 +72,8 @@ export function Historic() {
                         <div className={styles.card} key={historic.id}>
                             <h2>{historic.valor}</h2>
                             <p><strong>Time Stamped:</strong> {historic.timestamp}</p>
-                            <p>
-                                <strong>Sensor:</strong> {sensorsMap[historic.sensor] || 'Desconhecido'}
-                            </p>
-                            <p>
-                                <strong>Ambient:</strong> {ambientsMap[historic.ambient_object_id] || 'Desconhecido'}
-                            </p>
+                            <p><strong>Sensor:</strong> {historic.sensor_name || 'Desconhecido'}</p>
+                            <p><strong>Ambient:</strong> {historic.ambient_name || 'Desconhecido'}</p>
                         </div>
                     ))}
                 </div>
