@@ -44,8 +44,8 @@ export function Ambients() {
                     {ambients.map(ambient => {
                         return (
                             <div className={styles.card} key={ambient.id}>
-                                <h2>{ambient.sig}</h2>
-                                <p><strong>Description:</strong> {ambient.descricao}</p>
+                                <h2>{ambient.descricao}</h2>
+                                <p><strong>SIG:</strong> {ambient.sig}</p>
                                 <p><strong>NI:</strong> {ambient.ni}</p>
                                 <p><strong>Responsible:</strong> {ambient.responsavel}</p>
                             </div>
