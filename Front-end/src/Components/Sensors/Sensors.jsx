@@ -16,14 +16,13 @@ export function Sensors() {
             }
         })
         .then(response => {
-            console.log("Sensores recebidos: ", response.data);
             setTimeout(() => {
                 setSensors(response.data.sensors || response.data);
                 setLoading(false);
             }, 2000);
         })
         .catch(error => {
-            console.error("Failed to search sensors: ", error);
+            console.error("Erro ao buscar sensores: ", error);
             setLoading(false);
         });
     }, []);
@@ -42,17 +41,18 @@ export function Sensors() {
                 </div>
 
                 <div className={styles.list}>
-                    {sensors 
-                        .map(sensor => (
-                        <div className={styles.card} key={sensor.id}>
-                            <h2>{sensor.sensor}</h2>
-                            <p><strong>Mac address:</strong> {sensor.mac_address}</p>
-                            <p><strong>Unit of measurement:</strong> {sensor.unidade_medida}</p>
-                            <p><strong>Latitude:</strong> {sensor.latitude}</p>
-                            <p><strong>Longitude:</strong> {sensor.longitude}</p>
-                            <p><strong>Status:</strong> {sensor.status}</p>
-                        </div>
-                    ))}
+                    {sensors.map(sensor => {
+                        return (
+                            <div className={styles.card} key={sensor.id}>
+                                <h2>{sensor.sensor}</h2>
+                                <p><strong>Mac address:</strong> {sensor.mac_address}</p>
+                                <p><strong>Unit of measurement:</strong> {sensor.unidade_medida}</p>
+                                <p><strong>Latitude:</strong> {sensor.latitude}</p>
+                                <p><strong>Longitude:</strong> {sensor.longitude}</p>
+                                <p><strong>Status:</strong> {sensor.status ? 'Active' : 'Inactive'}</p> {/* Esse campo pode ser alterado após análise do console */}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </div>
