@@ -57,7 +57,7 @@ export function FormLogin() {
             const usernameFromApi = userRes.data.username;
             localStorage.setItem("username",usernameFromApi);
             
-            navigate("/home");
+            navigate("/pageApp");
         } catch (error) {
             setLoginError("Login error. Please, check the credentials!");
         }
