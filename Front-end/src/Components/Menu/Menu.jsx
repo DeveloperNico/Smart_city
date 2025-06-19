@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import styles from './Menu.module.css';
 import axios from 'axios';
 import { Sensors } from '../Sensors/Sensors';
+import { Ambients } from '../Ambients/Ambients';
+import { Historic } from '../Historic/Historic';
 
 import { Radio } from 'lucide-react';
 import { HouseWifi } from 'lucide-react';
@@ -15,7 +17,7 @@ export function Menu() {
         switch (selectedCard) {
             case 'sensors': return <Sensors />;
             case 'ambients': return <Ambients />;
-            case 'historic': return <Historics />;
+            case 'historic': return <Historic />;
             default: return null;
         }
     };
