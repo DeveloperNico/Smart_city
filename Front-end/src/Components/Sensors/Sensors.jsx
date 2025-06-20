@@ -260,11 +260,11 @@ export function Sensors() {
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <label className={styles.label}>
                         Name of sensor:
-                        <input className={styles.inputModal} value={formData.sensor} onChange={(e) => setFormData({ ...formData, sensor: e.target.value })} required />
+                        <input placeholder='Type here...' className={styles.inputModal} value={formData.sensor} onChange={(e) => setFormData({ ...formData, sensor: e.target.value })} required />
                     </label>
                     <label className={styles.label}>
                         MAC Address:
-                        <input className={styles.inputModal} value={formData.mac_address} onChange={(e) => setFormData({ ...formData, mac_address: e.target.value })} required />
+                        <input placeholder='__:__:__:__:__:__' className={styles.inputModal} value={formData.mac_address} onChange={(e) => setFormData({ ...formData, mac_address: e.target.value })} required />
                     </label>
                     <label className={styles.label}>
                         Unit of Measurement:
@@ -277,11 +277,11 @@ export function Sensors() {
                     </label>
                     <label className={styles.label}>
                         Latitude:
-                        <input type="number" className={styles.inputModal} value={formData.latitude} onChange={(e) => setFormData({ ...formData, latitude: e.target.value })} required />
+                        <input placeholder='Type here...' type="number" className={styles.inputModal} value={formData.latitude} onChange={(e) => setFormData({ ...formData, latitude: e.target.value })} required />
                     </label>
                     <label className={styles.label}>
                         Longitude:
-                        <input type="number" className={styles.inputModal} value={formData.longitude} onChange={(e) => setFormData({ ...formData, longitude: e.target.value })} required />
+                        <input placeholder='Type here...' type="number" className={styles.inputModal} value={formData.longitude} onChange={(e) => setFormData({ ...formData, longitude: e.target.value })} required />
                     </label>
                     <label className={styles.label}>
                         Status:

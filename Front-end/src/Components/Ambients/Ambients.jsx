@@ -225,6 +225,7 @@ export function Ambients() {
           <label className={styles.label}>
             SIG:
             <input
+              placeholder='Ex.: XXXXXXXX'
               className={styles.inputModal}
               value={formData.sig}
               onChange={(e) => setFormData({ ...formData, sig: e.target.value })}
@@ -234,6 +235,7 @@ export function Ambients() {
           <label className={styles.label}>
             Description:
             <input
+              placeholder='Type here...'
               className={styles.inputModal}
               value={formData.descricao || ''}
               onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
@@ -242,6 +244,7 @@ export function Ambients() {
           <label className={styles.label}>
             NI:
             <input
+              placeholder='Ex.: SNXXXXX or XXXXXXX'
               className={styles.inputModal}
               value={formData.ni || ''}
               onChange={(e) => setFormData({ ...formData, ni: e.target.value })}
@@ -250,6 +253,7 @@ export function Ambients() {
           <label className={styles.label}>
             Responsible:
             <input
+              placeholder='Type here...'
               className={styles.inputModal}
               value={formData.responsavel || ''}
               onChange={(e) => setFormData({ ...formData, responsavel: e.target.value })}
