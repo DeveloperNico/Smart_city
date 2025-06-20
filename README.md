@@ -11,31 +11,32 @@
 
 ![Logo](https://github.com/user-attachments/assets/5cab9076-03aa-4b90-aa0b-be7b36740115)
 
-**SmartFlow** é um sistema desenvolvido para cidades inteligentes, integrando dados de **quatro tipos de sensores**:
+**SmartFlow is a system developed for smart cities, integrating data from four types of sensors:**:
 
-- 👧🏽 **Contador de pessoas**  
-- 🌤️ **Temperatura**  
-- 💡 **Luminosidade**  
-- 💧 **Umidade**  
+- 👧🏽 **People Counter**
+- 🌤️ **Temperature**
+- 💡 **Luminosity**
+- 💧 **Humidity**
 
-A aplicação centraliza e organiza os dados capturados pelos sensores, permitindo que administradores monitorem e manipulem todas as informações em tempo real. Com isso, é possível tomar decisões mais eficientes para otimizar recursos urbanos, melhorar a qualidade de vida dos cidadãos e garantir uma gestão inteligente da infraestrutura da cidade.
+The application centralizes and organizes the data captured by the sensors, allowing administrators to monitor and manage all information in real time. This enables more efficient decision-making to optimize urban resources, improve citizens' quality of life, and ensure intelligent management of city infrastructure.
 
-## Tecnologias do projeto  
+## Project Technologies 
 ![icons8-django-24](https://github.com/user-attachments/assets/2bb9046f-b8eb-4656-87b5-8ece4c5e8bb5)
 ![icons8-react-24](https://github.com/user-attachments/assets/b6b9bbd5-a269-4f4a-ba98-3e9c297735ac)
+![icons8-css-24](https://github.com/user-attachments/assets/3d55a670-d4b1-4d95-8703-ecf6a219b69f)
 
-Banco de dados
+Database
 
 ![icons8-mysql-24](https://github.com/user-attachments/assets/6a4829ad-4099-469f-a819-af044c1fb26c)
 
-## Para executar  
+## How to Run 
 
 ### BackEnd  
-- Certifique-se de ter o Python instalado na máquina
-- Instale um ambiente virtual (venv)
-- Instale as dependências do arquivo `requirements.txt`
-- Configure suas credenciais no arquivo `settings.py` para conexão com MySQL Workbench
-- Execute os seguintes comandos:
+- Make sure Python is installed on your machine
+- Set up a virtual environment (venv)
+- Install the dependencies from the `requirements.txt` file
+- Configure your MySQL credentials in the `settings.py` file
+- Run the following commands:
 
 ```sh
 python manage.py makemigrations
@@ -43,21 +44,21 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-#### Comando para criar o banco de dados
+#### Command to create the database
 ```
 CREATE DATABASE smart_city_db;
 ```
 
 ### FrontEnd
-- Tenha o Node.js instalado na máquina
-- Execute os seguintes comandos:
+- Make sure Node.js is installed on your machine
+- Run the following commands:
 
 ```sh
 npm i
 npm run dev
 ```
 
-### Link da documentação 
+### Documentation Link
 https://documenter.getpostman.com/view/41931876/2sB2xBDVd1
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
