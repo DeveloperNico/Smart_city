@@ -1,0 +1,226 @@
+@import "../../styles/variable.css";
+
+.container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(22, 22, 22, 0.4));
+    font-family: "Poppins", sans-serif;
+}
+
+.icon {
+    color: #000;
+    width: 80px;
+    height: 80px;
+}
+
+.title {
+    margin-bottom: 30px;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background-color: #e9e9e9;
+    padding: 20px 60px;
+    height: 600px;
+    border-radius: 10px;
+}
+
+.formContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.formHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.input {
+    width: 500px;
+    height: 40px;
+    border: none;
+    background-color: #f1f1f1;
+    border-bottom: 2px solid #acacac;
+    padding-left: 15px;
+    font-size: 16px;
+    outline: none;
+    border-radius: 5px;
+}
+
+.username {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.email {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.password {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.confirmPassword {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.buttonContainer {
+    margin-top: 50px;
+}
+
+.button {
+    background: linear-gradient(to right, #030B5D, #A200B1);
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.button:hover {
+    background: linear-gradient(to right, #0613a1, #c605d8);
+}
+
+.image {
+    width: 600px;
+    height: 400px;
+    margin-bottom: 20px;
+}
+
+.error {
+    color: #f02a2a;
+    font-size: 14px;
+}
+
+.errorButton {
+    color: #f02a2a;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.registerRedirect {
+    margin-top: 15px;
+
+    & a {
+        text-decoration: none;
+        color: var(--color-purple);
+        font-weight: bold;
+        transition: 0.2s ease-in-out;
+    }
+
+    & a:hover {
+        color: var(--color-pink);
+    }
+}
+
+
+@media (max-width: 1260px) {
+    .form {
+        width: 1000px;
+    }
+
+    .image {
+        width: 500px;
+        height: 300px;
+    }
+
+    .input {
+        width: 400px;
+        height: 40px;
+    } 
+}
+
+@media (max-width: 1000px) {
+    .form {
+        width: 800px;
+    }
+
+    .image {
+        width: 400px;
+        height: 200px;
+    }
+
+    .input {
+        width: 300px;
+    }
+}
+
+@media (max-width: 800px) {
+    .form {
+        width: 700px;
+    }
+
+    .image {
+        display: none;
+    }
+
+    .input {
+        width: 500px;
+    }
+}
+
+@media (max-width: 600px) {
+    .formContent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    .form {
+        width: 300px;
+    }
+
+    .image {
+        display: none;
+    }
+
+    .input {
+        width: 200px;
+    }
+}
+
+@media (max-width: 390px) {
+    .formContent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    .form {
+        width: 300px;
+    }
+
+    .image {
+        display: none;
+    }
+
+    .input {
+        width: 200px;
+    }
+}
