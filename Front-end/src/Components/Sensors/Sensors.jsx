@@ -7,6 +7,7 @@ import { set, z } from 'zod';
 import Loading from '../Components-Uiverse/Loading/Loading';
 
 import { Pencil, Plus, Trash2 } from 'lucide-react';
+import BurguerMenu from '../Components-Uiverse/BurguerMenu/BurguerMenu';
 
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -41,8 +42,6 @@ const sensorSchema = z.object({
     })
 });
 
-
-
 export function Sensors() {
     const [sensors, setSensors] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -57,6 +56,8 @@ export function Sensors() {
         longitude: '',
         status: true
     });
+    const [filter, setFilter] = useState("all");
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem("access");
@@ -75,6 +76,17 @@ export function Sensors() {
             setLoading(false);
         });
     }, []);
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (menuOpen && !e.target.closest(`.${styles.dropdownContainer}`)) {
+                setMenuOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [menuOpen]);
 
     const resetForm = () => {
         setFormData({
@@ -162,13 +174,36 @@ export function Sensors() {
             <div className={styles.container}>
                 <div className={styles.header}>
                     <h1>Sensores</h1>
-                    <button className={styles.addButton} onClick={() => setShowModal(true)}>
-                        <Plus /> Add. Sensor
-                    </button>
+                    <div className={styles.functionalitiesHeader}>
+                        <button className={styles.addButton} onClick={() => setShowModal(true)}>
+                            <Plus /> Add. Sensor
+                        </button>
+                        <div className={styles.dropdownContainer}>
+                            <BurguerMenu 
+                                isOpen={menuOpen}
+                                onClick={() => setMenuOpen(!menuOpen)}
+                            />
+                            
+                            {menuOpen && (
+                                <div className={styles.dropdownMenu}>
+                                    <button onClick={() => { setFilter("all"); setMenuOpen(false); }}>All</button>
+                                    <button onClick={() => { setFilter("temperatura"); setMenuOpen(false); }}>Temperature</button>
+                                    <button onClick={() => { setFilter("contador"); setMenuOpen(false); }}>Counter</button>
+                                    <button onClick={() => { setFilter("luminosidade"); setMenuOpen(false); }}>Luminosity</button>
+                                    <button onClick={() => { setFilter("umidade"); setMenuOpen(false); }}>Humididy</button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
 
                 <div className={styles.list}>
-                    {sensors.map(sensor => (
+                    {sensors
+                        .filter(sensor => {
+                            if (filter === "all") return true;
+                            return sensor.sensor.toLowerCase().includes(filter);
+                        })
+                        .map(sensor => (
                         <div className={styles.card} key={sensor.id}>
                             <h2>{sensor.sensor}</h2>
                             <p><strong>MAC Address:</strong> {sensor.mac_address}</p>
