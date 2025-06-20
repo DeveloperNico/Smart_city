@@ -93,6 +93,10 @@ export function FormLogin() {
                             </button>
                         </div>
                         {loginError && <span className={styles.errorButton}>{loginError}</span>}
+                        
+                        <div className={styles.singUp}>
+                            <p>Don't have an account? <a href="/singUp">Sing up</a></p>    
+                        </div>
                     </div>
 
                     <div className={styles.imageContainer}>

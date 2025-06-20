@@ -5,6 +5,7 @@ urlpatterns = [
     path('login/', Login.as_view(), name='login'),
     path('users/', UserListCreateView.as_view(), name='user-list-create'),
     path('me/', get_me, name='me'),
+    path('register/', Register.as_view(), name='register'),
     path('users/<int:pk>/', UserRetriveUpdateDestroyView.as_view(), name='user-retrieve-update-destroy'),
 
     # Endpoints para importação de sensores via Excel -----------------------------------------------------------------------------

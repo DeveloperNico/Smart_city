@@ -7,7 +7,7 @@ from .permissions import IsAdmin
 from rest_framework import status
 from django.contrib.contenttypes.models import ContentType  
 from rest_framework.parsers import MultiPartParser
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.http import HttpResponse
@@ -20,6 +20,16 @@ import io
 def get_me(request):
     serializer = UserSerializer(request.user)
     return Response(serializer.data)
+
+class Register(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "User create successfuly."}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Classe de login utilizando JWT com serializer personalizado
 class Login(TokenObtainPairView):
