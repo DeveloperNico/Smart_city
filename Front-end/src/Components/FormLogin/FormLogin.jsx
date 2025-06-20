@@ -89,7 +89,7 @@ export function FormLogin() {
 
                         <div className={styles.buttonContainer}>
                             <button type="submit" className={styles.button}>
-                                Entrar
+                                Enter
                             </button>
                         </div>
                         {loginError && <span className={styles.errorButton}>{loginError}</span>}
