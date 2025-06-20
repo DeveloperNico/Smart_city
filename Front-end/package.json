@@ -17,6 +17,8 @@
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.2",
     "styled-components": "^6.1.18",
+    "sweetalert2": "^11.22.0",
+    "sweetalert2-react-content": "^5.1.0",
     "zod": "^3.25.67"
   },
   "devDependencies": {
