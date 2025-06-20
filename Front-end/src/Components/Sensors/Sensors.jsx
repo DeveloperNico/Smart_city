@@ -207,7 +207,7 @@ export function Sensors() {
                         <div className={styles.card} key={sensor.id}>
                             <h2>{sensor.sensor}</h2>
                             <p><strong>MAC Address:</strong> {sensor.mac_address}</p>
-                            <p><strong>Unidade:</strong> {sensor.unidade_medida}</p>
+                            <p><strong>Unit of measurement:</strong> {sensor.unidade_medida}</p>
                             <p><strong>Latitude:</strong> {sensor.latitude}</p>
                             <p><strong>Longitude:</strong> {sensor.longitude}</p>
                             <p><strong>Status:</strong> {sensor.status ? 'Active' : 'Inactive'}</p>
@@ -225,10 +225,10 @@ export function Sensors() {
                 </div>
             </div>
 
-            <Modal title={isEditing ? "Editar Sensor" : "Cadastrar Novo Sensor"} isOpen={showModal} onClose={resetForm}>
+            <Modal title={isEditing ? "Edit Sensor" : "Register New Sensor"} isOpen={showModal} onClose={resetForm}>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <label className={styles.label}>
-                        Nome do sensor:
+                        Name of sensor:
                         <input className={styles.inputModal} value={formData.sensor} onChange={(e) => setFormData({ ...formData, sensor: e.target.value })} required />
                     </label>
                     <label className={styles.label}>
@@ -236,7 +236,7 @@ export function Sensors() {
                         <input className={styles.inputModal} value={formData.mac_address} onChange={(e) => setFormData({ ...formData, mac_address: e.target.value })} required />
                     </label>
                     <label className={styles.label}>
-                        Unidade de Medida:
+                        Unit of Measurement:
                         <select className={styles.inputChoices} value={formData.unidade_medida} onChange={(e) => setFormData({ ...formData, unidade_medida: e.target.value })}>
                             <option value="%">%</option>
                             <option value="uni">uni</option>
@@ -255,12 +255,12 @@ export function Sensors() {
                     <label className={styles.label}>
                         Status:
                         <select className={styles.inputChoices} value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value === 'true' })}>
-                            <option value="true">Ativo</option>
-                            <option value="false">Inativo</option>
+                            <option value="true">Active</option>
+                            <option value="false">Inactive</option>
                         </select>
                     </label>
                     <button className={styles.button} type="submit">
-                        {isEditing ? "Salvar" : "Cadastrar"}
+                        {isEditing ? "Save" : "Register"}
                     </button>
                 </form>
             </Modal>
