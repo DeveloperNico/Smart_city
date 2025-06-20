@@ -70,7 +70,7 @@ export function Sensors() {
             setTimeout(() => {
                 setSensors(response.data.sensors || response.data);
                 setLoading(false);
-            }, 1000);
+            }, 2000);
         })
         .catch(error => {
             console.error("Erro ao buscar sensores: ", error);
@@ -199,7 +199,7 @@ export function Sensors() {
         <div className={styles.center}>
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <h1>Sensores</h1>
+                    <h1>Sensors</h1>
                     <div className={styles.functionalitiesHeader}>
                         <button className={styles.addButton} onClick={() => setShowModal(true)}>
                             <Plus /> Add. Sensor

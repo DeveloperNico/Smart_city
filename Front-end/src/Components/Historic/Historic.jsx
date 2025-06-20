@@ -38,7 +38,7 @@ export function Historic() {
                 // Criar um mapa id -> descrição do ambiente
                 const ambientMap = {};
                 ambients.forEach(ambient => {
-                    ambientMap[ambient.id] = ambient.descricao || ambient.nome || 'Desconhecido';
+                    ambientMap[ambient.id] = ambient.descricao || ambient.nome || 'Unknow';
                 });
 
                 setSensorsMap(sensorMap);
@@ -64,7 +64,7 @@ export function Historic() {
         <div className={styles.center}>
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <h1>Históricos</h1>
+                    <h1>Historics</h1>
                 </div>
 
                 <div className={styles.list}>
@@ -72,8 +72,8 @@ export function Historic() {
                         <div className={styles.card} key={historic.id}>
                             <h2>{historic.valor}</h2>
                             <p><strong>Time Stamped:</strong> {historic.timestamp}</p>
-                            <p><strong>Sensor:</strong> {historic.sensor_name || 'Desconhecido'}</p>
-                            <p><strong>Ambient:</strong> {historic.ambient_name || 'Desconhecido'}</p>
+                            <p><strong>Sensor:</strong> {historic.sensor_name || 'Unknow'}</p>
+                            <p><strong>Ambient:</strong> {historic.ambient_name || 'Unknow'}</p>
                         </div>
                     ))}
                 </div>

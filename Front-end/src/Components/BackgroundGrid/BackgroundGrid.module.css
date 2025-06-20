@@ -34,13 +34,6 @@
     height: 25vh;
     overflow: hidden;
     z-index: 1;
-
-    /* mask-image: linear-gradient(
-        to right,
-        transparent,
-        #000000 10% 90%,
-        transparent
-    ); */
 }
 
 /* Cada lista dentro do slider */

@@ -61,7 +61,7 @@ export function Ambients() {
         setTimeout(() => {
           setAmbients(response.data.ambients || response.data);
           setLoading(false);
-        }, 1000);
+        }, 3000);
       })
       .catch((error) => {
         console.error('Erro ao buscar ambientes: ', error);
