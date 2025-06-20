@@ -6,9 +6,10 @@ import api from '../../api/axios';
 import { set, z } from 'zod';
 import Loading from '../Components-Uiverse/Loading/Loading';
 
-import { Pencil, Plus, Trash2 } from 'lucide-react';
+import { Pencil, Plus, Trash2, Download } from 'lucide-react';
 import BurguerMenu from '../Components-Uiverse/BurguerMenu/BurguerMenu';
 import ButtonBackToTop from '../Components-Uiverse/ButtonBackToTop/ButtonBackToTop';
+import ButtonDownload from '../Components-Uiverse/ButtonDownload/ButtonDownload';
 
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -166,6 +167,31 @@ export function Sensors() {
         });
     };
 
+    const handleExportToExcel = () => {
+        const token = localStorage.getItem('access');
+
+        axios.get("http://127.0.0.1:8000/api/export/sensors/", {
+            headers: { Authorization: `Bearer ${token}` },
+            responseType: "blob" // para acessar arquivos não binários
+        })
+        .then(response => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "sensors.xlsx"); // nome do aruqivo
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        })
+        .catch(error => {
+            console.error("Error when exporting to Excel:", error);
+            Swal.fire("Error", "The data could not be exported.", "error");
+
+        })
+    };
+
+    console.log("Excel: ", handleExportToExcel);
+
     if (loading) {
         return <Loading className={styles.loadingContainer} />;
     }
@@ -179,6 +205,11 @@ export function Sensors() {
                         <button className={styles.addButton} onClick={() => setShowModal(true)}>
                             <Plus /> Add. Sensor
                         </button>
+
+                        <button className={styles.exportButton} onClick={handleExportToExcel}>
+                            <Download /> Export to Excel
+                        </button>
+
                         <div className={styles.dropdownContainer}>
                             <BurguerMenu 
                                 isOpen={menuOpen}
