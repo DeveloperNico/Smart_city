@@ -202,7 +202,12 @@ export function Sensors() {
                     </label>
                     <label className={styles.label}>
                         Unidade de Medida:
-                        <input className={styles.inputModal} value={formData.unidade_medida} onChange={(e) => setFormData({ ...formData, unidade_medida: e.target.value })} required />
+                        <select className={styles.inputChoices} value={formData.unidade_medida} onChange={(e) => setFormData({ ...formData, unidade_medida: e.target.value })}>
+                            <option value="%">%</option>
+                            <option value="uni">uni</option>
+                            <option value="ºC">ºC</option>
+                            <option value="lux">lux</option>
+                        </select>
                     </label>
                     <label className={styles.label}>
                         Latitude:

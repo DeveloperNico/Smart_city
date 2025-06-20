@@ -22,6 +22,14 @@ class User(AbstractUser):
 
 # Modelo para representar sensores
 class Sensor(models.Model):
+    # Opções fixas para unidade de medida do sensor
+    UNIDADE_MEDIDA_CHOICES = [
+        ('%', '%'),        # Porcentagem, usado por sensores de umidade, por exemplo
+        ('uni', 'uni'),    # Unidade, pode ser usada para contagem de eventos
+        ('ºC', 'ºC'),      # Graus Celsius, usado por sensores de temperatura
+        ('lux', 'lux'),    # Lux, unidade de iluminância (intensidade da luz)
+    ]
+
     # Nome ou identificação do sensor
     sensor = models.CharField(max_length=100)
 
@@ -34,20 +42,22 @@ class Sensor(models.Model):
     # Endereço MAC do sensor, com validador aplicado
     mac_address = models.CharField(max_length=17, validators=[validator_mac_address])
 
-    # Unidade de medida (ex: ºC, ppm, etc.)
-    unidade_medida = models.CharField(max_length=10)
+    # Unidade de medida do sensor, escolhida a partir de um conjunto fixo de opções
+    unidade_medida = models.CharField(
+        max_length=10,
+        choices=UNIDADE_MEDIDA_CHOICES
+    )
 
-    # Coordenadas geográficas do sensor
+    # Coordenadas geográficas do sensor (latitude e longitude)
     latitude = models.FloatField()
     longitude = models.FloatField()
 
-    # Indica se o sensor está ativo ou inativo
+    # Indica se o sensor está ativo (True) ou inativo (False)
     status = models.BooleanField(default=True)
 
     def __str__(self):
         # Retorna o nome do sensor como representação textual
         return self.sensor
-
 # Modelo que representa um ambiente monitorado
 class Ambient(models.Model):
     # Validador para o campo SIG (código de identificação do ambiente)
